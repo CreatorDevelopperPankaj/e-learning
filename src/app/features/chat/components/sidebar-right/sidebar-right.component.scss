@@ -1,0 +1,19 @@
+.sidebar-right{
+  height: 100%;
+  padding: 12px;
+  border-left: 1px solid rgba(0,0,0,0.06);
+  overflow: auto;
+  background: var(--surface-ground, #fff);
+}
+
+.sidebar-right__header{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.sidebar-right__title{font-weight: 600;}
+
+.muted{color: rgba(0,0,0,0.6); margin: 0;}
+

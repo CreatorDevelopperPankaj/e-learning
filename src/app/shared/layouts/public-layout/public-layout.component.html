@@ -1,0 +1,182 @@
+<div class="public-layout-wrapper">
+
+  @if (showShell) {
+  <header class="app-header sticky top-0 z-5">
+
+    <p-menubar [model]="navItems" styleClass="custom-menubar">
+
+      <!-- Logo -->
+      <ng-template pTemplate="start">
+
+        <div class="logo-container" routerLink="/">
+
+          <div class="logo-icon">
+            E
+          </div>
+
+          <span class="logo-text">
+            Edu<span>Prime</span>
+          </span>
+
+        </div>
+
+      </ng-template>
+
+      <!-- Menu -->
+      <ng-template pTemplate="item" let-item>
+
+        <a *ngIf="item.routerLink" [routerLink]="item.routerLink" class="menu-link">
+
+          <i [class]="item.icon"></i>
+
+          <span>{{ item.label }}</span>
+
+        </a>
+
+        <a *ngIf="item.command" (click)="item.command()" class="menu-link cursor-pointer">
+
+          <i [class]="item.icon"></i>
+
+          <span>{{ item.label }}</span>
+
+        </a>
+
+      </ng-template>
+
+      <!-- Right Actions -->
+      <ng-template pTemplate="end">
+
+        <div class="header-actions">
+
+          @if (isLoggedIn && currentUser) {
+          <p-button label="Go to Dashboard" icon="pi pi-th-large" severity="primary" [routerLink]="dashboardUrl"
+            styleClass="desktop-btn signup-btn">
+          </p-button>
+
+          <app-profile-dropdown [name]="currentUser.name" [email]="currentUser.email"
+            [initials]="userInitials" [showDashboardAction]="true" [publicMenuOnly]="true">
+          </app-profile-dropdown>
+          } @else {
+          <div class="login-dropdown">
+              <button type="button" class="login-btn" (click)="showLoginMenu = !showLoginMenu">
+
+
+                <i class="pi pi-sign-in"></i>
+                <span>Login</span>
+              
+              <i class="pi pi-chevron-down"></i>
+
+            </button>
+
+            @if (showLoginMenu) {
+
+            <div class="dropdown-menu">
+
+              <button type="button" class="menu-item" (click)="goTo('student')">
+
+                <i class="pi pi-user"></i>
+                <span>Student Login</span>
+
+              </button>
+
+              <button type="button" class="menu-item" (click)="goTo('instructor')">
+
+                <i class="pi pi-book"></i>
+                <span>Instructor Login</span>
+
+              </button>
+
+              <button type="button" class="menu-item" (click)="goTo('admin')">
+
+                <i class="pi pi-shield"></i>
+                <span>Admin Login</span>
+              </button>
+
+            </div>
+
+            }
+
+          </div>
+          }
+
+          <p-button icon="pi pi-bars" [text]="true" severity="secondary" styleClass="mobile-menu-btn"
+            (onClick)="mobileSidebarVisible = true">
+          </p-button>
+
+        </div>
+
+      </ng-template>
+
+    </p-menubar>
+
+  </header>
+
+  <!-- Drawer -->
+
+  <p-drawer *ngIf="showShell" [(visible)]="mobileSidebarVisible" position="left" [blockScroll]="true"
+    styleClass="custom-sidebar">
+
+    <ng-template pTemplate="header">
+
+      <div class="logo-container">
+
+        <div class="logo-icon">
+          E
+        </div>
+
+        <span class="logo-text">
+          Edu<span>Prime</span>
+        </span>
+
+      </div>
+
+    </ng-template>
+
+    <div class="drawer-content" *ngIf="showShell">
+
+      <p-menu [model]="navItems" styleClass="sidebar-menu">
+      </p-menu>
+
+      <div class="drawer-actions">
+
+        @if (isLoggedIn && currentUser) {
+        <div class="drawer-user">
+          <span class="drawer-avatar">{{ userInitials }}</span>
+
+          <div>
+            <strong>{{ currentUser.name }}</strong>
+            <small>{{ currentUser.email }}</small>
+          </div>
+        </div>
+
+        <p-button label="Go to Dashboard" icon="pi pi-th-large" severity="primary" [routerLink]="dashboardUrl">
+        </p-button>
+        } @else {
+        <p-button label="Log In" [outlined]="true" severity="secondary" routerLink="/login">
+        </p-button>
+
+        <p-button label="Sign Up" severity="primary" routerLink="/register">
+        </p-button>
+
+        <div class="auth-links">
+          <a routerLink="/forgot-password">Forgot password?</a>
+          <a routerLink="/verify-email">Verify email</a>
+          <a routerLink="/reset-password">Reset password</a>
+          <a routerLink="/profile-setup">Profile setup</a>
+        </div>
+        }
+
+      </div>
+
+    </div>
+
+  </p-drawer>
+  }
+
+  <main class="layout-content">
+
+    <router-outlet></router-outlet>
+
+  </main>
+
+</div>

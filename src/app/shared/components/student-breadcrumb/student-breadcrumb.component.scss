@@ -1,0 +1,78 @@
+:host {
+  display: block;
+}
+
+.student-breadcrumb {
+  width: 100%Back to ;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border-radius: 0;
+  background: transparent;
+  filter: drop-shadow(0 8px 12px rgba(15, 23, 42, 0.16));
+}
+
+.crumb {
+  position: relative;
+  min-width: 106px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -12px;
+  color: #a3a7ae;
+  background: linear-gradient(180deg, #ffffff, #f1f1f3);
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%);
+}
+
+.crumb:first-child {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+  border-radius: 2px 0 0 2px;
+}
+
+.crumb.active {
+  z-index: 2;
+  color: #fff;
+  background: linear-gradient(180deg, #4f9af4, #2f7ddd);
+}
+
+.crumb-content {
+  width: 100%;
+  height: 100%;
+  padding: 0 24px 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.crumb:first-child .crumb-content {
+  padding-left: 18px;
+}
+
+.crumb i {
+  font-size: 11px;
+}
+
+.crumb:not(.active):hover {
+  color: #64748b;
+  background: linear-gradient(180deg, #ffffff, #e7edf7);
+}
+
+@media (max-width: 768px) {
+  .student-breadcrumb {
+    width: 100%;
+  }
+
+  .crumb {
+    min-width: 98px;
+  }
+}

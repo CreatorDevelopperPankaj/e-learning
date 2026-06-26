@@ -1,0 +1,35 @@
+<div class="deadline-card">
+
+  <div class="card-header">
+
+    <h3>Upcoming Deadlines</h3>
+
+    <a routerLink="/student/assignments">View All</a>
+
+  </div>
+
+  @for(item of deadlines; track item.title){
+
+    <div class="deadline-item" [routerLink]="item.route">
+
+      <div>
+
+        <h4>{{ item.title }}</h4>
+
+        <p>{{ item.subtitle }}</p>
+
+      </div>
+
+      <span
+        class="badge"
+        [class]="item.class">
+
+        {{ item.status }}
+
+      </span>
+
+    </div>
+
+  }
+
+</div>

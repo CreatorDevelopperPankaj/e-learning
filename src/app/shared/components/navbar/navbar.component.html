@@ -1,0 +1,18 @@
+<p-menubar class="w-full">
+    <ng-template pTemplate="start">
+        <div class="flex align-items-center gap-2">
+            <p-button icon="pi pi-bars" [text]="true" [severity]="'secondary'" (onClick)="toggleSidebar.emit()"></p-button>
+            <span class="font-bold text-xl text-primary cursor-pointer" routerLink="/">EduPrime</span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+        <div class="flex align-items-center gap-3">
+            <app-profile-dropdown
+                [name]="userName"
+                [email]="userEmail"
+                [initials]="userInitials">
+            </app-profile-dropdown>
+        </div>
+    </ng-template>
+</p-menubar>

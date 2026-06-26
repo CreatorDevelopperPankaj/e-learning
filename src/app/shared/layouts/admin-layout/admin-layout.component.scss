@@ -1,0 +1,22 @@
+/* admin layout styles */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.breadcrumb-wrap {
+  padding: 18px 32px 0;
+}
+
+.page-content {
+  min-width: 0;
+}
+
+

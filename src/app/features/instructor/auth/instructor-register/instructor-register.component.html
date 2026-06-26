@@ -1,0 +1,145 @@
+<div class="auth-page">
+  <div class="auth-background"></div>
+
+  <form class="auth-card" [formGroup]="registerForm" (ngSubmit)="submit()" novalidate>
+    <div class="brand-section">
+      <div class="logo">E</div>
+      <h2>Instructor Registration</h2>
+    </div>
+
+    <h1>Create your instructor account</h1>
+    <p class="subtitle">Fill in your professional details for admin approval.</p>
+
+    <!-- Profile Photo Upload -->
+    <div class="profile-upload-section">
+      <div class="profile-upload-wrapper" (click)="fileInput.click()">
+        <div class="profile-avatar" [class.has-image]="profilePreview">
+          <img *ngIf="profilePreview" [src]="profilePreview" alt="Profile preview" />
+          <mat-icon *ngIf="!profilePreview" class="avatar-placeholder">person</mat-icon>
+        </div>
+        <div class="camera-overlay">
+          <mat-icon>camera_alt</mat-icon>
+        </div>
+      </div>
+      <input
+        #fileInput
+        type="file"
+        accept="image/png,image/jpeg,image/jpg,image/webp"
+        hidden
+        (change)="onFileSelected($event)"
+      />
+      <p class="upload-label">Upload Profile Photo <span class="required-star">*</span></p>
+      <p class="upload-hint">JPG, PNG or WebP. Max 5MB.</p>
+      <mat-error *ngIf="registerForm.controls.profilePhoto.touched && !selectedFile" class="profile-error">
+        Profile photo is required
+      </mat-error>
+    </div>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" placeholder="Enter full name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Email Address</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="Enter email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Mobile Number</mat-label>
+      <input matInput formControlName="mobileNumber" placeholder="Enter mobile" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" placeholder="Min 8 characters" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Professional Title</mat-label>
+      <input matInput formControlName="professionalTitle" placeholder="e.g. UX Designer" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Experience (Years)</mat-label>
+      <input matInput type="number" formControlName="experienceYears" placeholder="e.g. 5" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Skills (comma separated)</mat-label>
+      <input
+        matInput
+        formControlName="skillsText"
+        placeholder="e.g. Figma, UI Design, Prototyping"
+        (keydown.enter)="$event.preventDefault(); addSkillFromText()"
+      />
+    </mat-form-field>
+
+    <div class="chips-wrap" *ngIf="skillsArray.length">
+      <!-- <mat-chip-list>
+        <mat-chip *ngFor="let s of registerForm.controls.skills.value; let i = index" [removable]="true" (removed)="removeSkill(i)">
+          {{ s }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list> -->
+      
+
+      <mat-chip-set>
+ <mat-chip *ngFor="let s of registerForm.controls.skills.value; let i = index" [removable]="true" (removed)="removeSkill(i)">
+          {{ s }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+</mat-chip-set>
+    </div>
+
+    <div class="field-actions">
+      <button mat-stroked-button color="primary" type="button" (click)="addSkillFromText()">
+        Add Skills
+      </button>
+    </div>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Bio / About Me</mat-label>
+      <textarea matInput rows="4" formControlName="bio" placeholder="Write something about you" ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>LinkedIn URL (optional)</mat-label>
+      <input matInput formControlName="linkedInUrl" placeholder="https://linkedin.com/..." />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>GitHub URL (optional)</mat-label>
+      <input matInput formControlName="githubUrl" placeholder="https://github.com/..." />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Portfolio Website (optional)</mat-label>
+      <input matInput formControlName="portfolioWebsite" placeholder="https://..." />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>YouTube Channel (optional)</mat-label>
+      <input matInput formControlName="youtubeChannel" placeholder="https://youtube.com/..." />
+    </mat-form-field>
+
+    <div class="server-error" *ngIf="serverError">
+      {{ serverError }}
+    </div>
+
+    <button mat-raised-button color="primary" class="signin-btn" type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Submitting...' : 'Register' }}
+    </button>
+
+    <div class="signup-link">
+      <span>Already registered?</span>
+      <a routerLink="/instructor/login">Go to login</a>
+    </div>
+  </form>
+</div>
+

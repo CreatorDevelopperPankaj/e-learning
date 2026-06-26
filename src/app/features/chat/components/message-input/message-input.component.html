@@ -1,0 +1,15 @@
+<div class="message-input">
+  <div class="message-input__row">
+    <input
+      pInputText
+      type="text"
+      placeholder="Type a message... (placeholder)"
+      [value]="draft()"
+      (input)="draft.set($any($event.target).value)"
+      class="message-input__field"
+    />
+
+    <button pButton type="button" label="Send" icon="pi pi-send" (click)="onSend()"></button>
+  </div>
+</div>
+

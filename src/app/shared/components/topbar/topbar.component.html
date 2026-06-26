@@ -1,0 +1,46 @@
+<header class="topbar">
+
+  <div class="left-section">
+
+    <button
+      class="menu-btn"
+      (click)="menuClick.emit()">
+
+      <i class="pi pi-bars"></i>
+
+    </button>
+
+    <h3>{{ title || 'Dashboard' }}</h3>
+
+
+  </div>
+
+  <div class="search-box">
+
+    <i class="pi pi-search"></i>
+
+    <input
+      type="text"
+      placeholder="Search courses..." />
+
+  </div>
+
+  <div class="right-section">
+
+    <button class="icon-btn">
+      <i class="pi pi-envelope"></i>
+    </button>
+
+      <app-profile-dropdown
+      [name]="userName"
+      [email]="userEmail"
+      [initials]="userInitials"
+      [notificationCount]="notificationCount"
+      [publicMenuOnly]="false">
+    </app-profile-dropdown>
+
+
+    
+  </div>
+
+</header>

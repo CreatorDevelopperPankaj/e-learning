@@ -1,0 +1,62 @@
+<div class="pricing-section">
+
+  <div class="pricing-header">
+
+    <span class="pricing-badge">
+      💎 Pricing Plans
+    </span>
+
+    <h1>
+      Choose Your Learning Plan
+    </h1>
+
+    <p>
+      Flexible pricing for students, professionals,
+      and organizations.
+    </p>
+
+  </div>
+
+  <div class="pricing-grid">
+
+    <div
+      class="pricing-card"
+      *ngFor="let plan of plans"
+      [class.popular]="plan.popular">
+
+      <div
+        class="popular-badge"
+        *ngIf="plan.popular">
+        Most Popular
+      </div>
+
+      <h3>{{plan.name}}</h3>
+
+      <div class="price">
+
+        <span class="currency">₹</span>
+
+        {{plan.price}}
+
+        <small>/month</small>
+
+      </div>
+
+      <ul>
+
+        <li *ngFor="let feature of plan.features">
+          ✅ {{feature}}
+        </li>
+
+      </ul>
+
+      <p-button
+        label="Get Started"
+        styleClass="w-full">
+      </p-button>
+
+    </div>
+
+  </div>
+
+</div>

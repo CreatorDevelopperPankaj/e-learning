@@ -1,0 +1,30 @@
+:root {
+  --app-bg: #f5f7fb;
+  --app-text: #0f172a;
+  --app-surface: #ffffff;
+}
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text);
+}
+
+body.dark {
+  --app-bg: #0b1220;
+  --app-text: #e5e7eb;
+  --app-surface: #111827;
+}
+
+/* Ensure PrimeNG/Material color-scheme takes effect */
+body.dark {
+  color-scheme: dark;
+}
+
+/* Example: override common layout backgrounds that were hardcoded */
+.app-dark-bg,
+.layout,
+.approval-page {
+  background: var(--app-bg) !important;
+  color: var(--app-text) !important;
+}
+

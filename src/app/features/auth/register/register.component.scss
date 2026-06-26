@@ -1,0 +1,542 @@
+// ═══════════════════════════════════════════════════════════
+//  Student Registration  –  multi-step wizard
+// ═══════════════════════════════════════════════════════════
+
+// ── Tokens ────────────────────────────────────────────────
+$blue        : #1d4ed8;
+$blue-light  : #dbeafe;
+$blue-mid    : #3b82f6;
+$blue-dark   : #1e3a8a;
+$green       : #16a34a;
+$green-light : #dcfce7;
+$red         : #dc2626;
+$red-light   : #fee2e2;
+$gray-50     : #f9fafb;
+$gray-100    : #f3f4f6;
+$gray-200    : #e5e7eb;
+$gray-400    : #9ca3af;
+$gray-500    : #6b7280;
+$gray-700    : #374151;
+$gray-900    : #111827;
+$white       : #ffffff;
+
+$radius-sm   : 6px;
+$radius-md   : 10px;
+$radius-lg   : 14px;
+$radius-xl   : 20px;
+$radius-full : 9999px;
+
+$shadow-sm   : 0 1px 3px rgba(0,0,0,.08);
+$shadow-md   : 0 4px 16px rgba(0,0,0,.10);
+$shadow-lg   : 0 8px 32px rgba(0,0,0,.12);
+
+// ── Page layout ───────────────────────────────────────────
+.reg-page {
+  display: flex;
+  min-height: 100vh;
+  background: $gray-50;
+  font-family: 'Inter', sans-serif;
+}
+
+// ── Sidebar ───────────────────────────────────────────────
+.reg-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, #1e3a8a 0%, #1d4ed8 60%, #3b82f6 100%);
+  color: $white;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 24px;
+  gap: 28px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo-icon {
+    width: 42px;
+    height: 42px;
+    background: $white;
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    i { color: $blue; font-size: 1.2rem; }
+  }
+
+  &__logo-title {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__logo-sub {
+    display: block;
+    font-size: 0.7rem;
+    opacity: .75;
+  }
+
+  &__hero {
+    margin-top: 12px;
+  }
+
+  &__title {
+    font-size: 1.9rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 12px;
+
+    strong { font-weight: 800; }
+  }
+
+  &__desc {
+    font-size: 0.82rem;
+    opacity: .85;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__illustration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      max-height: 220px;
+      object-fit: contain;
+      opacity: .92;
+    }
+  }
+
+  &__badge {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba($white, .12);
+    border-radius: $radius-md;
+    padding: 14px;
+    font-size: 0.78rem;
+
+    i { font-size: 1.1rem; margin-top: 2px; flex-shrink: 0; }
+
+    &-title {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    &-sub {
+      display: block;
+      opacity: .8;
+      line-height: 1.4;
+    }
+  }
+}
+
+// ── Main ──────────────────────────────────────────────────
+.reg-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 48px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// ── Header ────────────────────────────────────────────────
+.reg-header {
+  text-align: center;
+
+  &__title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin: 0 0 6px;
+  }
+
+  &__sub {
+    font-size: 0.875rem;
+    color: $gray-500;
+    margin: 0;
+  }
+}
+
+// ── Step Indicator ────────────────────────────────────────
+.reg-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 4px;
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: default;
+    min-width: 90px;
+
+    &--active .reg-steps__circle {
+      background: $blue;
+      color: $white;
+      border-color: $blue;
+      box-shadow: 0 0 0 4px $blue-light;
+    }
+
+    &--active .reg-steps__label {
+      color: $blue;
+      font-weight: 600;
+    }
+
+    &--done .reg-steps__circle {
+      background: $green;
+      color: $white;
+      border-color: $green;
+    }
+
+    &--done .reg-steps__label {
+      color: $green;
+    }
+  }
+
+  &__circle {
+    width: 36px;
+    height: 36px;
+    border-radius: $radius-full;
+    border: 2px solid $gray-200;
+    background: $white;
+    color: $gray-400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all .2s;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    color: $gray-400;
+    white-space: nowrap;
+    transition: color .2s;
+  }
+
+  &__line {
+    flex: 1;
+    height: 2px;
+    background: $gray-200;
+    margin-bottom: 22px;
+    min-width: 32px;
+    transition: background .2s;
+
+    &--done { background: $green; }
+  }
+}
+
+// ── Section ───────────────────────────────────────────────
+.reg-section {
+  background: $white;
+  border: 1px solid $gray-200;
+  border-radius: $radius-lg;
+  padding: 24px;
+  box-shadow: $shadow-sm;
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: $blue;
+    margin-bottom: 20px;
+
+    i { font-size: 1rem; }
+  }
+}
+
+// ── Grid ──────────────────────────────────────────────────
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 20px;
+  align-items: start;
+}
+
+// ── Field ─────────────────────────────────────────────────
+.reg-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &--photo {
+    grid-row: span 2;
+    grid-column: 1;
+  }
+
+  &--wide {
+    grid-column: span 2;
+  }
+}
+
+.reg-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $gray-700;
+
+  .req { color: $red; margin-left: 2px; }
+}
+
+// ── Input wrapper ─────────────────────────────────────────
+.reg-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.reg-input-icon {
+  position: absolute;
+  left: 11px;
+  color: $gray-400;
+  font-size: 0.82rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.reg-input,
+.reg-select {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.1rem;
+  border: 1.5px solid $gray-200;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  color: $gray-900;
+  background: $white;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+  appearance: none;
+
+  &::placeholder { color: $gray-400; }
+
+  &:focus {
+    border-color: $blue-mid;
+    box-shadow: 0 0 0 3px rgba($blue-mid, .12);
+  }
+}
+
+.reg-select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.reg-error {
+  color: $red;
+  font-size: 0.75rem;
+}
+
+// ── Photo upload ──────────────────────────────────────────
+.photo-upload {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 160px;
+  border: 2px dashed $gray-200;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color .15s;
+
+  &:hover { border-color: $blue-mid; }
+
+  &__preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px;
+    text-align: center;
+
+    i {
+      font-size: 2rem;
+      color: $gray-400;
+    }
+  }
+
+  &__cta {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $blue;
+  }
+
+  &__hint {
+    font-size: 0.7rem;
+    color: $gray-400;
+    line-height: 1.4;
+  }
+}
+
+// ── Review ────────────────────────────────────────────────
+.reg-review {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px 24px;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__key {
+    font-size: 0.75rem;
+    color: $gray-400;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+
+  &__val {
+    font-size: 0.875rem;
+    color: $gray-900;
+    font-weight: 500;
+  }
+}
+
+// ── Server error ──────────────────────────────────────────
+.reg-server-error {
+  background: $red-light;
+  color: $red;
+  border: 1px solid lighten($red, 30%);
+  border-radius: $radius-md;
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// ── Note bar ──────────────────────────────────────────────
+.reg-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: $radius-md;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  color: $blue-dark;
+
+  &__icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+  strong { display: block; margin-bottom: 2px; font-weight: 600; }
+  p { margin: 0; opacity: .85; line-height: 1.5; }
+}
+
+// ── Footer nav ────────────────────────────────────────────
+.reg-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  align-items: center;
+}
+
+.reg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.55rem 1.4rem;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all .15s;
+
+  &--back {
+    background: $white;
+    color: $gray-700;
+    border: 1.5px solid $gray-200;
+
+    &:hover:not(:disabled) { background: $gray-100; }
+    &:disabled { opacity: .4; cursor: not-allowed; }
+  }
+
+  &--next {
+    background: $blue;
+    color: $white;
+
+    &:hover { background: darken($blue, 6%); }
+  }
+
+  &--submit {
+    background: $blue;
+    color: $white;
+    padding: 0.55rem 2rem;
+
+    &:hover:not(:disabled) { background: darken($blue, 6%); }
+    &:disabled { opacity: .55; cursor: not-allowed; }
+  }
+}
+
+// ── Bottom links ──────────────────────────────────────────
+.reg-login-link {
+  text-align: center;
+  font-size: 0.875rem;
+  color: $gray-500;
+
+  a { color: $blue; font-weight: 600; text-decoration: none;
+      &:hover { text-decoration: underline; } }
+}
+
+.reg-copyright {
+  text-align: center;
+  font-size: 0.78rem;
+  color: $gray-400;
+  margin-top: 4px;
+}
+
+// ── Responsive ────────────────────────────────────────────
+@media (max-width: 1024px) {
+  .reg-sidebar { width: 220px; padding: 24px 16px; }
+  .reg-main    { padding: 28px 24px; }
+  .reg-grid    { grid-template-columns: repeat(2, 1fr); }
+  .reg-field--photo { grid-row: span 1; }
+}
+
+@media (max-width: 768px) {
+  .reg-page    { flex-direction: column; }
+  .reg-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap;
+                 padding: 20px; gap: 16px;
+                 &__illustration { display: none; } }
+  .reg-main    { padding: 20px 16px; }
+  .reg-grid    { grid-template-columns: 1fr; }
+  .reg-review__grid { grid-template-columns: repeat(2, 1fr); }
+  .reg-field--wide { grid-column: 1; }
+  .reg-steps   { gap: 0; overflow-x: auto; }
+}

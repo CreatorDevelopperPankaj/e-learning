@@ -1,0 +1,74 @@
+<div class="auth-page">
+  <div class="auth-background"></div>
+
+  <div class="overlay"></div>
+
+  <form
+    class="auth-card"
+    [formGroup]="loginForm"
+    (ngSubmit)="submit()"
+    novalidate>
+
+    <div class="brand-section">
+      <div class="logo">
+        <mat-icon>admin_panel_settings</mat-icon>
+      </div>
+
+      <div>
+        <h2>Admin Console</h2>
+        <span>Learning Management System</span>
+      </div>
+    </div>
+
+    <h1>Welcome Back 👋</h1>
+
+    <p class="subtitle">
+      Sign in to access the administration dashboard
+    </p>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Email Address</mat-label>
+      <mat-icon matPrefix>mail</mat-icon>
+
+      <input
+        matInput
+        type="email"
+        formControlName="email"
+        placeholder="Enter your email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="field-group">
+      <mat-label>Password</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        placeholder="Enter your password" />
+    </mat-form-field>
+
+    <div class="auth-options">
+      <mat-checkbox color="primary" formControlName="rememberMe">
+        Remember me
+      </mat-checkbox>
+    </div>
+
+    <div class="server-error" *ngIf="serverError">
+      {{ serverError }}
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="signin-btn"
+      type="submit"
+      [disabled]="isSubmitting">
+
+      <mat-icon>login</mat-icon>
+
+      {{ isSubmitting ? 'Signing In...' : 'Sign In' }}
+    </button>
+
+  </form>
+</div>

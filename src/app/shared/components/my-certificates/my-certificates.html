@@ -1,0 +1,35 @@
+<div class="certificate-grid">
+
+  @for (cert of certificates; track cert.name) {
+
+    <mat-card class="certificate-card" [routerLink]="['/student/certificates', cert.id]">
+
+      <div class="certificate-top">
+
+        <img
+          [src]="cert.image"
+          [alt]="cert.name">
+
+        <div>
+
+          <h4>{{ cert.name }}</h4>
+
+          <span>{{ cert.subtitle }}</span>
+
+        </div>
+
+      </div>
+
+      <small>
+        Issued on 20 May 2025
+      </small>
+
+      <button class="download-btn" type="button" (click)="$event.stopPropagation()">
+        <mat-icon>download</mat-icon>
+      </button>
+
+    </mat-card>
+
+  }
+
+</div>

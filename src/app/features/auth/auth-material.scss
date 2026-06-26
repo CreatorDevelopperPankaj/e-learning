@@ -1,0 +1,14 @@
+:host{display:block}
+
+/* Keep existing auth theme, but ensure Material controls align */
+.mat-mdc-form-field{width:100%}
+
+/* Button sizing */
+.mat-mdc-raised-button.signin-btn{height:38px}
+
+/* Mat-checkbox text color (over dark background) */
+:host ::ng-deep .mat-mdc-checkbox .mdc-form-field {
+  color: #ffffff;
+}
+
+

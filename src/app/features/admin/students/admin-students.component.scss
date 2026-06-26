@@ -1,0 +1,987 @@
+// ═══════════════════════════════════════════════════════════
+//  Admin › Students  –  component styles
+// ═══════════════════════════════════════════════════════════
+
+// ── Tokens ────────────────────────────────────────────────
+$purple : #7c3aed;
+$purple-light: #ede9fe;
+$green : #16a34a;
+$green-light : #dcfce7;
+$red : #dc2626;
+$red-light : #fee2e2;
+$blue : #2563eb;
+$blue-light : #dbeafe;
+$orange : #ea580c;
+$orange-light: #ffedd5;
+
+$text-primary : #111827;
+$text-secondary: #6b7280;
+$border : #e5e7eb;
+$surface : #ffffff;
+$page-bg : #f9fafb;
+
+$radius-sm : 6px;
+$radius-md : 10px;
+$radius-lg : 14px;
+$radius-full: 9999px;
+
+$shadow-card: 0 1px 3px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .04);
+
+// ── Page shell ────────────────────────────────────────────
+.students-page {
+    padding: 28px 32px;
+    background: $page-bg;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+}
+
+// ── Page Header ───────────────────────────────────────────
+.page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    &__title {
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: $text-primary;
+            margin: 0 0 4px;
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 0.875rem;
+            color: $text-secondary;
+            margin: 0;
+        }
+    }
+}
+
+.export-btn {
+    &.p-button {
+        border: 1.5px solid $border !important;
+        color: $text-primary !important;
+        background: $surface !important;
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: $radius-md !important;
+        padding: 0.5rem 1rem !important;
+        gap: 6px;
+
+        .p-button-icon {
+            font-size: 0.8rem;
+        }
+
+        &:hover {
+            background: $page-bg !important;
+        }
+    }
+}
+
+// ── Stat Cards ────────────────────────────────────────────
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: $shadow-card;
+
+    &__icon {
+        width: 52px;
+        height: 52px;
+        border-radius: $radius-full;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        i {
+            font-size: 1.3rem;
+        }
+
+        &--purple {
+            background: $purple-light;
+
+            i {
+                color: $purple;
+            }
+        }
+
+        &--green {
+            background: $green-light;
+
+            i {
+                color: $green;
+            }
+        }
+
+        &--red {
+            background: $red-light;
+
+            i {
+                color: $red;
+            }
+        }
+
+        &--blue {
+            background: $blue-light;
+
+            i {
+                color: $blue;
+            }
+        }
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__value {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: $text-primary;
+        line-height: 1;
+    }
+
+    &__label {
+        font-size: 0.8rem;
+        color: $text-secondary;
+        font-weight: 400;
+    }
+}
+
+// ── Filter Bar ────────────────────────────────────────────
+.filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    box-shadow: $shadow-card;
+
+    &__search {
+        position: relative;
+        flex: 1;
+        min-width: 200px;
+
+        i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $text-secondary;
+            font-size: 0.85rem;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.45rem 0.75rem 0.45rem 2rem;
+            border: 1.5px solid $border;
+            border-radius: $radius-md;
+            font-size: 0.875rem;
+            color: $text-primary;
+            outline: none;
+            transition: border-color .15s;
+
+            &::placeholder {
+                color: $text-secondary;
+            }
+
+            &:focus {
+                border-color: $purple;
+            }
+        }
+    }
+}
+
+// PrimeNG select override for filter bar
+::ng-deep .filter-select {
+    &.p-select {
+        border: 1.5px solid $border;
+        border-radius: $radius-md;
+        font-size: 0.875rem;
+        min-width: 130px;
+
+        .p-select-label {
+            padding: 0.45rem 0.75rem;
+        }
+
+        &:not(.p-disabled):hover {
+            border-color: $purple;
+        }
+
+        &.p-focus {
+            border-color: $purple;
+            box-shadow: 0 0 0 2px rgba($purple, .1);
+        }
+    }
+}
+
+.reset-btn {
+    &.p-button {
+        border: 1.5px solid $border !important;
+        color: $text-secondary !important;
+        background: $surface !important;
+        border-radius: $radius-md !important;
+        font-size: 0.875rem;
+        padding: 0.45rem 0.85rem !important;
+        gap: 6px;
+        white-space: nowrap;
+
+        &:hover {
+            background: $page-bg !important;
+            color: $text-primary !important;
+        }
+    }
+}
+
+.apply-btn {
+    &.p-button {
+        background: $purple !important;
+        border: none !important;
+        border-radius: $radius-md !important;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.45rem 1rem !important;
+        gap: 6px;
+        white-space: nowrap;
+
+        &:hover {
+            background: darken($purple, 8%) !important;
+        }
+    }
+}
+
+// ── Table Card ────────────────────────────────────────────
+.table-card {
+    background: $surface;
+    border: 1px solid $border;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-card;
+    overflow: hidden;
+}
+
+.table-loading,
+.table-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 48px;
+    color: $text-secondary;
+    font-size: 0.9rem;
+
+    i {
+        font-size: 1.2rem;
+    }
+}
+
+.table-error {
+    color: $red;
+}
+
+// PrimeNG table overrides
+::ng-deep .students-table {
+    &.p-datatable {
+        .p-datatable-thead>tr>th {
+            background: $surface;
+            color: $text-secondary;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            border-bottom: 1px solid $border;
+            padding: 12px 16px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        .p-datatable-tbody>tr {
+            border-bottom: 1px solid $border;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            >td {
+                padding: 14px 16px;
+                font-size: 0.875rem;
+                color: $text-primary;
+                border: none;
+                vertical-align: middle;
+            }
+
+            &:hover>td {
+                background: #fafafa;
+            }
+        }
+
+        // hide default p-table borders
+        .p-datatable-wrapper {
+            border: none;
+        }
+    }
+}
+
+// ── Student Cell ──────────────────────────────────────────
+.student-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    &__avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: $radius-full;
+        object-fit: cover;
+        border: 2px solid $border;
+        flex-shrink: 0;
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    &__name {
+        font-weight: 600;
+        color: $text-primary;
+        font-size: 0.875rem;
+        text-transform: capitalize;
+    }
+
+    &__email {
+        font-size: 0.78rem;
+        color: $text-secondary;
+    }
+}
+
+// ── Course Cell ───────────────────────────────────────────
+.course-cell {
+    font-size: 0.875rem;
+    color: $text-primary;
+}
+
+// ── Country Cell ──────────────────────────────────────────
+.country-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &__flag {
+        width: 22px;
+        height: auto;
+        border-radius: 2px;
+    }
+}
+
+// ── Date Cell ─────────────────────────────────────────────
+.date-cell {
+    white-space: nowrap;
+    color: $text-secondary;
+    font-size: 0.875rem;
+}
+
+// ── Progress Cell ─────────────────────────────────────────
+.progress-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 90px;
+
+    &__pct {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $text-primary;
+    }
+}
+
+.progress-bar {
+    width: 100%;
+    height: 5px;
+    background: #e5e7eb;
+    border-radius: $radius-full;
+    overflow: hidden;
+
+    &__fill {
+        height: 100%;
+        border-radius: $radius-full;
+        transition: width .3s ease;
+
+        &--low {
+            background: $orange;
+        }
+
+        // < 40%
+        &--medium {
+            background: $blue;
+        }
+
+        // 40–79%
+        &--high {
+            background: $purple;
+        }
+
+        // 80–99%
+        &--full {
+            background: $green;
+        }
+
+        // 100%
+    }
+}
+
+// ── Status Tag ────────────────────────────────────────────
+::ng-deep .status-tag {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    padding: 3px 10px !important;
+    border-radius: $radius-full !important;
+
+    &--active {
+        background: $green-light !important;
+        color: $green !important;
+    }
+
+    &--completed {
+        background: $blue-light !important;
+        color: $blue !important;
+    }
+
+    &--suspended {
+        background: $red-light !important;
+        color: $red !important;
+    }
+}
+
+// ── Action Buttons ────────────────────────────────────────
+.action-btns {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.action-btn {
+    &.p-button {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+
+        .p-button-icon {
+            font-size: 0.875rem;
+        }
+    }
+
+    &--view {
+        .p-button-icon {
+            color: #0891b2;
+        }
+    }
+
+    &--edit {
+        .p-button-icon {
+            color: $purple;
+        }
+    }
+
+    &--suspend {
+        .p-button-icon {
+            color: $red;
+        }
+    }
+
+    &--cert {
+        .p-button-icon {
+            color: $blue;
+        }
+    }
+
+    &--activate {
+        .p-button-icon {
+            color: $green;
+        }
+    }
+}
+
+// ── Empty State ───────────────────────────────────────────
+.empty-state {
+    text-align: center;
+    padding: 48px !important;
+    color: $text-secondary;
+
+    i {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    span {
+        font-size: 0.9rem;
+    }
+}
+
+// ── Table Footer ──────────────────────────────────────────
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-top: 1px solid $border;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+// ── Bulk Actions ──────────────────────────────────────────
+.bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    &__count {
+        font-size: 0.8rem;
+        color: $text-secondary;
+        margin-right: 4px;
+        white-space: nowrap;
+    }
+}
+
+.bulk-btn {
+    &.p-button {
+        font-size: 0.8rem !important;
+        font-weight: 500;
+        padding: 0.35rem 0.7rem !important;
+        border-radius: $radius-md !important;
+        gap: 5px;
+
+        &:disabled {
+            opacity: .4;
+        }
+    }
+
+    &--suspend {
+        &.p-button {
+            color: $orange !important;
+        }
+    }
+
+    &--activate {
+        &.p-button {
+            color: $green !important;
+        }
+    }
+
+    &--export {
+        &.p-button {
+            color: $blue !important;
+        }
+    }
+}
+
+// ── Pagination ────────────────────────────────────────────
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pag-arrow {
+    &.p-button {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        color: $text-secondary !important;
+
+        &:disabled {
+            opacity: .35;
+        }
+
+        &:not(:disabled):hover {
+            background: $purple-light !important;
+            color: $purple !important;
+        }
+    }
+}
+
+.pag-num {
+    &.p-button {
+        width: 32px !important;
+        height: 32px !important;
+        padding: 0 !important;
+        font-size: 0.825rem !important;
+        font-weight: 500;
+        background: transparent !important;
+        color: $text-secondary !important;
+        border: none !important;
+
+        &:hover {
+            background: $purple-light !important;
+            color: $purple !important;
+        }
+    }
+
+    &--active {
+        &.p-button {
+            background: $purple !important;
+            color: #fff !important;
+
+            &:hover {
+                background: darken($purple, 8%) !important;
+            }
+        }
+    }
+}
+
+.pag-ellipsis {
+    font-size: 0.875rem;
+    color: $text-secondary;
+    padding: 0 2px;
+    user-select: none;
+}
+
+// ── Responsive ────────────────────────────────────────────
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .students-page {
+        padding: 16px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .table-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+// ── Tokens ────────────────────────────────────────────────
+$purple : #7c3aed;
+$purple-light: #ede9fe;
+$green : #16a34a;
+$green-light : #dcfce7;
+$red : #dc2626;
+$red-light : #fee2e2;
+$blue : #2563eb;
+$text-primary : #111827;
+$text-secondary: #6b7280;
+$border : #e5e7eb;
+$radius-md : 10px;
+$radius-full : 9999px;
+
+// ── Dialog shell ──────────────────────────────────────────
+::ng-deep .edit-student-dialog {
+
+    .p-dialog {
+        border-radius: 16px !important;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .15) !important;
+    }
+
+    .p-dialog-header {
+        padding: 20px 24px 16px !important;
+        border-bottom: 1px solid $border;
+        background: #fff;
+
+        .p-dialog-title {
+            display: none;
+        }
+
+        // we render our own
+    }
+
+    .p-dialog-content {
+        padding: 0 !important;
+        background: #fff;
+    }
+
+    .p-dialog-footer {
+        padding: 0 !important;
+        border-top: 1px solid $border;
+        background: #fff;
+    }
+}
+
+// ── Custom header title ───────────────────────────────────
+.dialog-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $text-primary;
+}
+
+// ── Body layout ───────────────────────────────────────────
+.dialog-body {
+    display: flex;
+    gap: 0;
+}
+
+// ── Avatar column ─────────────────────────────────────────
+.avatar-col {
+    width: 160px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 28px 16px 28px 24px;
+    border-right: 1px solid $border;
+}
+
+.avatar-wrap {
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+
+.avatar-img {
+    width: 96px;
+    height: 96px;
+    border-radius: $radius-full;
+    object-fit: cover;
+    border: 3px solid $border;
+}
+
+.avatar-upload {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 28px;
+    height: 28px;
+    background: $purple;
+    border-radius: $radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: background .15s;
+
+    i {
+        color: #fff;
+        font-size: 0.75rem;
+    }
+
+    &:hover {
+        background: darken($purple, 8%);
+    }
+}
+
+.avatar-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $text-primary;
+    text-align: center;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.avatar-joined {
+    font-size: 0.72rem;
+    color: $text-secondary;
+    text-align: center;
+    line-height: 1.4;
+}
+
+::ng-deep .avatar-status {
+    font-size: 0.72rem !important;
+    font-weight: 600 !important;
+    padding: 2px 10px !important;
+    border-radius: $radius-full !important;
+}
+
+// ── Fields column ─────────────────────────────────────────
+.fields-col {
+    flex: 1;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    max-height: 480px;
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    &--full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $text-primary;
+    }
+
+    .req {
+        color: $red;
+        margin-left: 2px;
+    }
+
+    // PrimeNG input override
+    input.p-inputtext {
+        width: 100%;
+        border: 1.5px solid $border;
+        border-radius: $radius-md;
+        font-size: 0.875rem;
+        padding: 0.45rem 0.75rem;
+        color: $text-primary;
+        transition: border-color .15s;
+
+        &:focus {
+            border-color: $purple;
+            box-shadow: 0 0 0 2px rgba($purple, .1);
+            outline: none;
+        }
+    }
+}
+
+.field-error {
+    color: $red;
+    font-size: 0.75rem;
+}
+
+// PrimeNG select / datepicker / password inside dialog
+::ng-deep .edit-student-dialog {
+
+    .p-select {
+        width: 100%;
+        border: 1.5px solid $border;
+        border-radius: $radius-md;
+        font-size: 0.875rem;
+
+        .p-select-label {
+            padding: 0.45rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        &:not(.p-disabled):hover {
+            border-color: $purple;
+        }
+
+        &.p-focus {
+            border-color: $purple;
+            box-shadow: 0 0 0 2px rgba($purple, .1);
+        }
+    }
+
+    .p-datepicker-input-icon-container,
+    .p-datepicker {
+        width: 100%;
+
+        input {
+            width: 100%;
+            border: 1.5px solid $border;
+            border-radius: $radius-md;
+            font-size: 0.875rem;
+            padding: 0.45rem 0.75rem;
+
+            &:focus {
+                border-color: $purple;
+                box-shadow: 0 0 0 2px rgba($purple, .1);
+                outline: none;
+            }
+        }
+    }
+
+    .p-password {
+        width: 100%;
+
+        input {
+            width: 100%;
+            border: 1.5px solid $border;
+            border-radius: $radius-md;
+            font-size: 0.875rem;
+            padding: 0.45rem 2.5rem 0.45rem 0.75rem;
+
+            &:focus {
+                border-color: $purple;
+                box-shadow: 0 0 0 2px rgba($purple, .1);
+                outline: none;
+            }
+        }
+    }
+}
+
+// ── Footer ────────────────────────────────────────────────
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 24px;
+}
+
+.cancel-btn {
+    &.p-button {
+        border: 1.5px solid $border !important;
+        color: $text-primary !important;
+        background: #fff !important;
+        border-radius: $radius-md !important;
+        font-size: 0.875rem;
+        padding: 0.5rem 1.25rem !important;
+
+        &:hover {
+            background: #f9fafb !important;
+        }
+    }
+}
+
+.update-btn {
+    &.p-button {
+        background: $purple !important;
+        border: none !important;
+        border-radius: $radius-md !important;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.5rem 1.5rem !important;
+
+        &:hover {
+            background: darken($purple, 8%) !important;
+        }
+
+        &:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+    }
+}

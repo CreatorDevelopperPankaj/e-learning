@@ -1,0 +1,112 @@
+.pricing-section {
+  padding: 100px 20px;
+  background:
+    linear-gradient(
+      135deg,
+      #0f172a,
+      #1e293b,
+      #312e81
+    );
+  color: white;
+}
+
+.pricing-header {
+  text-align: center;
+  margin-bottom: 70px;
+}
+
+.pricing-badge {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.pricing-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+
+.pricing-header p {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+  gap: 30px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+.pricing-card {
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 24px;
+  padding: 40px;
+  position: relative;
+  transition: .3s;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+}
+
+.popular {
+  border: 2px solid #8b5cf6;
+  transform: scale(1.05);
+}
+
+.popular-badge {
+  position: absolute;
+  top: -15px;
+  right: 20px;
+  background: #8b5cf6;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.price {
+  margin: 25px 0;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.currency {
+  font-size: 1.5rem;
+  vertical-align: top;
+}
+
+.price small {
+  font-size: 1rem;
+  color: #cbd5e1;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 30px 0;
+}
+
+li {
+  margin-bottom: 15px;
+  color: #e2e8f0;
+}
+
+::ng-deep .p-button {
+  background: #8b5cf6;
+  border: none;
+  width: 100%;
+}
+
+::ng-deep .p-button:hover {
+  background: #7c3aed;
+}

@@ -1,0 +1,90 @@
+<aside class="sidebar" [class.collapsed]="collapsed">
+
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-icon">
+      <i class="pi pi-shield"></i>
+    </div>
+
+    @if (!collapsed) {
+      <span>EduPrime</span>
+    }
+  </div>
+
+  <!-- Menu -->
+  <ul class="menu">
+
+    @for (item of menuItems; track item.label) {
+
+      <!-- Parent with Children -->
+      @if (item.items?.length) {
+
+        <li class="menu-group">
+
+          <div
+            class="group-title"
+            [class.open]="item.expanded"
+            (click)="toggleMenu(item)">
+
+            <i [class]="item.icon"></i>
+
+            @if (!collapsed) {
+              <span>{{ item.label }}</span>
+
+              <i class="pi pi-chevron-down group-chevron"></i>
+            }
+
+          </div>
+
+          @if (!collapsed) {
+            <ul
+              class="group-items"
+              [class.open]="item.expanded">
+
+              @for (child of item.items; track child.label) {
+
+                <li routerLinkActive="active">
+
+                  <a [routerLink]="child.routerLink">
+
+                    <i [class]="child.icon"></i>
+
+                    <span>{{ child.label }}</span>
+
+                  </a>
+
+                </li>
+
+              }
+
+            </ul>
+          }
+
+        </li>
+
+      }
+
+      <!-- Single Menu -->
+      @else {
+
+        <li routerLinkActive="active">
+
+          <a [routerLink]="item.routerLink">
+
+            <i [class]="item.icon"></i>
+
+            @if (!collapsed) {
+              <span>{{ item.label }}</span>
+            }
+
+          </a>
+
+        </li>
+
+      }
+
+    }
+
+  </ul>
+
+</aside>

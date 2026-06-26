@@ -1,0 +1,592 @@
+// ═══════════════════════════════════════════════════════════
+//  Student Login Page  –  navy sidebar + white card
+// ═══════════════════════════════════════════════════════════
+
+// ── Tokens ────────────────────────────────────────────────
+$navy         : #0d1b3e;
+$navy-mid     : #132249;
+$navy-light   : #1a2f5e;
+$blue         : #1d4ed8;
+$blue-bright  : #2563eb;
+$blue-accent  : #3b82f6;
+$white        : #ffffff;
+$gray-50      : #f8fafc;
+$gray-100     : #f1f5f9;
+$gray-200     : #e2e8f0;
+$gray-400     : #94a3b8;
+$gray-500     : #64748b;
+$gray-700     : #334155;
+$gray-900     : #0f172a;
+$red          : #dc2626;
+$red-light    : #fef2f2;
+
+$radius-sm    : 6px;
+$radius-md    : 10px;
+$radius-lg    : 16px;
+$radius-xl    : 24px;
+$radius-full  : 9999px;
+
+$shadow-card  : 0 4px 6px -1px rgba(0,0,0,.07),
+                0 2px 4px -2px rgba(0,0,0,.05);
+$shadow-lg    : 0 20px 40px rgba(0,0,0,.18);
+
+// ── Host ──────────────────────────────────────────────────
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+// ── Page split layout ─────────────────────────────────────
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+// ══════════════════════════════════════════════════════════
+//  LEFT PANEL
+// ══════════════════════════════════════════════════════════
+.login-panel {
+  width: 480px;
+  flex-shrink: 0;
+  background: $navy;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 44px;
+  color: $white;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(145deg, $navy-mid 0%, $navy 50%, $navy-light 100%);
+    z-index: 0;
+  }
+
+  // Glow orbs
+  &::after {
+    content: '';
+    position: absolute;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37,99,235,0.18) 0%, transparent 70%);
+    bottom: -80px; right: -80px;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  > * { position: relative; z-index: 1; }
+
+  // ── Logo ──
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  &__logo-icon {
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, $blue-bright, #7c3aed);
+    border-radius: $radius-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba($blue-bright, .45);
+
+    i { color: $white; font-size: 1.3rem; }
+  }
+
+  &__logo-text { line-height: 1.1; }
+
+  &__logo-title {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+  }
+
+  &__logo-sub {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: .14em;
+    color: $blue-accent;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  // ── Hero ──
+  &__hero { margin-bottom: 28px; }
+
+  &__headline {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    letter-spacing: -0.5px;
+  }
+
+  &__accent { color: $blue-accent; }
+
+  &__desc {
+    font-size: 0.92rem;
+    color: rgba($white, .68);
+    line-height: 1.7;
+    margin: 0;
+    max-width: 360px;
+  }
+
+  // ── Feature pills ──
+  &__features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  &__feature-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba($white, .05);
+    border: 1px solid rgba($white, .09);
+    border-radius: $radius-full;
+    padding: 8px 16px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: rgba($white, .8);
+    width: fit-content;
+    transition: background .2s, border-color .2s;
+
+    &:hover {
+      background: rgba($white, .09);
+      border-color: rgba($white, .16);
+    }
+
+    i {
+      font-size: 0.82rem;
+      color: $blue-accent;
+    }
+  }
+
+  // ── Illustration ──
+  &__illustration {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+
+    svg {
+      width: 100%;
+      max-width: 400px;
+      filter: drop-shadow(0 8px 28px rgba(0,0,0,.4));
+    }
+  }
+
+  // ── Decorative icons ──
+  &__decor {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+
+    i {
+      position: absolute;
+      color: rgba($white, .035);
+    }
+
+    i:nth-child(1) { top: 12%;  left: 6%;   font-size: 2.8rem; }
+    i:nth-child(2) { top: 22%;  right: 8%;  font-size: 3.2rem; }
+    i:nth-child(3) { top: 48%;  left: 3%;   font-size: 2.4rem; }
+    i:nth-child(4) { top: 60%;  right: 5%;  font-size: 4rem;   }
+    i:nth-child(5) { bottom: 18%; left: 14%; font-size: 3rem; }
+    i:nth-child(6) { bottom: 8%;  right: 12%; font-size: 2.6rem; }
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  RIGHT — card wrapper
+// ══════════════════════════════════════════════════════════
+.login-card-wrap {
+  flex: 1;
+  background: $gray-50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 448px;
+  background: $white;
+  border-radius: $radius-xl;
+  padding: 44px 48px 32px;
+  box-shadow: $shadow-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  // ── Avatar ──
+  &__avatar {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #eff6ff, #eef2ff);
+    border: 2px solid #e0e7ff;
+    border-radius: $radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+
+    i { font-size: 1.9rem; color: $blue-bright; }
+  }
+
+  &__title {
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: $gray-900;
+    margin: 0 0 6px;
+    text-align: center;
+    letter-spacing: -0.4px;
+  }
+
+  &__sub {
+    font-size: 0.875rem;
+    color: $gray-500;
+    margin: 0 0 28px;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  // ── Register link ──
+  &__register {
+    font-size: 0.86rem;
+    color: $gray-500;
+    margin-top: 22px;
+    text-align: center;
+  }
+
+  &__register-link {
+    color: $blue-bright;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 4px;
+    transition: gap .15s, opacity .15s;
+
+    i { font-size: 0.75rem; transition: transform .15s; }
+
+    &:hover {
+      opacity: .85;
+      gap: 7px;
+      i { transform: translateX(2px); }
+    }
+  }
+
+  &__footer {
+    font-size: 0.73rem;
+    color: $gray-400;
+    margin-top: 14px;
+    text-align: center;
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+//  FORM
+// ══════════════════════════════════════════════════════════
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.lf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 16px;
+}
+
+.lf-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $gray-700;
+  letter-spacing: 0.1px;
+}
+
+// ── Input wrapper ──────────────────────────────────────────
+.lf-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lf-icon {
+  position: absolute;
+  left: 13px;
+  color: $gray-400;
+  font-size: 0.85rem;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.lf-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 0.9rem 0 2.5rem;
+  border: 1.5px solid $gray-200;
+  border-radius: $radius-md;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: $gray-900;
+  background: #fafbff;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+
+  &::placeholder { color: #c1cbd9; font-size: 0.85rem; }
+
+  &:hover:not(:focus) {
+    border-color: #cbd5e1;
+    background: $white;
+  }
+
+  &:focus {
+    border-color: $blue-bright;
+    box-shadow: 0 0 0 3.5px rgba($blue-bright, .13);
+    background: $white;
+  }
+
+  &--pw { padding-right: 2.8rem; }
+}
+
+// ── Password toggle ────────────────────────────────────────
+.lf-toggle-pw {
+  position: absolute;
+  right: 11px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $gray-400;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  transition: color .15s;
+
+  &:hover { color: $blue-bright; }
+  i { font-size: 0.9rem; }
+}
+
+// ── Options row ────────────────────────────────────────────
+.lf-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.lf-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.84rem;
+  color: $gray-700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lf-checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 0; height: 0;
+}
+
+.lf-checkbox-mark {
+  width: 18px; height: 18px;
+  border: 2px solid $gray-200;
+  border-radius: $radius-sm;
+  background: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+
+  .lf-checkbox:checked + & {
+    background: $blue-bright;
+    border-color: $blue-bright;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 5px; height: 9px;
+      border: 2px solid $white;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
+    }
+  }
+}
+
+.lf-forgot {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: $blue-bright;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+// ── Server error ───────────────────────────────────────────
+.lf-server-error {
+  background: $red-light;
+  border: 1px solid lighten($red, 30%);
+  color: $red;
+  border-radius: $radius-md;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+// ── Login button ───────────────────────────────────────────
+.lf-btn-login {
+  width: 100%;
+  height: 44px;
+  background: linear-gradient(135deg, $blue-bright 0%, #4f46e5 100%);
+  color: $white;
+  border: none;
+  border-radius: $radius-md;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all .18s;
+  box-shadow: 0 4px 14px rgba($blue-bright, .38);
+  letter-spacing: .02em;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba($blue-bright, .48);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  i { font-size: 1rem; }
+}
+
+// ── OR divider ─────────────────────────────────────────────
+.lf-divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+  color: $gray-400;
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 44%;
+    height: 1px;
+    background: $gray-200;
+  }
+  &::before { left: 0; }
+  &::after  { right: 0; }
+}
+
+// ── Google button ──────────────────────────────────────────
+.lf-btn-google {
+  width: 100%;
+  height: 42px;
+  background: $white;
+  color: $gray-700;
+  border: 1.5px solid $gray-200;
+  border-radius: $radius-md;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background .15s, border-color .15s, box-shadow .15s;
+
+  &:hover {
+    background: $gray-50;
+    border-color: $gray-400;
+    box-shadow: $shadow-card;
+  }
+}
+
+.lf-google-icon {
+  width: 20px; height: 20px;
+  flex-shrink: 0;
+}
+
+// ── Error ──────────────────────────────────────────────────
+.lf-error {
+  color: $red;
+  font-size: 0.74rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  i { font-size: 0.72rem; }
+}
+
+// ── Responsive ─────────────────────────────────────────────
+@media (max-width: 960px) {
+  .login-panel {
+    width: 360px;
+    padding: 32px 28px;
+
+    &__headline { font-size: 2rem; }
+    &__illustration svg { max-width: 300px; }
+  }
+  .login-card { padding: 36px 32px 28px; }
+}
+
+@media (max-width: 720px) {
+  .login-page { flex-direction: column; }
+
+  .login-panel {
+    width: 100%;
+    padding: 28px 24px 36px;
+    min-height: auto;
+
+    &__illustration { display: none; }
+    &__headline { font-size: 1.9rem; }
+    &__features { flex-direction: row; flex-wrap: wrap; }
+  }
+
+  .login-card-wrap { padding: 28px 16px; }
+  .login-card {
+    padding: 32px 24px 24px;
+    border-radius: $radius-lg;
+  }
+}

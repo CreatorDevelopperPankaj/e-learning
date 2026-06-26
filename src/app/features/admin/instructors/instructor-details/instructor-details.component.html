@@ -1,0 +1,50 @@
+<div class="page">
+  <div class="error" *ngIf="serverError">{{ serverError }}</div>
+
+  <ng-container *ngIf="!serverError && isLoading">
+    <p>Loading...</p>
+  </ng-container>
+
+  <ng-container *ngIf="details && !isLoading">
+    <div class="header">
+      <div class="left">
+        <img class="avatar" [src]="details.profilePhoto" alt="" />
+        <div>
+          <h2>{{ details.name }}</h2>
+          <p class="muted">{{ details.email }} • {{ details.mobileNumber }}</p>
+        </div>
+      </div>
+      <p-tag [severity]="statusSeverity(details.status)" [value]="details.status"></p-tag>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Professional</h3>
+        <p><b>Title:</b> {{ details.professionalTitle }}</p>
+        <p><b>Experience:</b> {{ details.experienceYears }} years</p>
+
+        <h3>Skills</h3>
+        <div class="skills">
+          <span class="skill" *ngFor="let s of details.skills">{{ s }}</span>
+        </div>
+
+        <h3>Bio</h3>
+        <p>{{ details.bio }}</p>
+      </div>
+
+      <div class="card">
+        <h3>Social Links</h3>
+        <ul>
+          <li><a [href]="details.socialLinks.linkedInUrl" target="_blank">LinkedIn</a></li>
+          <li><a [href]="details.socialLinks.githubUrl" target="_blank">GitHub</a></li>
+          <li><a [href]="details.socialLinks.portfolioWebsite" target="_blank">Portfolio</a></li>
+          <li><a [href]="details.socialLinks.youtubeChannel" target="_blank">YouTube</a></li>
+        </ul>
+
+        <h3>Registered</h3>
+        <p>{{ details.registrationDate | date: 'medium' }}</p>
+      </div>
+    </div>
+  </ng-container>
+</div>
+

@@ -1,0 +1,159 @@
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  /* sticky navbar ke upar content overlap na kare */
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      135deg,
+      #f6f5ff,
+      #eef4ff
+    );
+  padding-top: 6rem; /* navbar height ke approx */
+  scroll-margin-top: 6rem;
+}
+
+
+.hero-bg-shape {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: rgba(138, 92, 245, 0.08);
+  top: -250px;
+  right: -150px;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  padding: 0 4rem;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #111827;
+  margin-bottom: 1.5rem;
+
+  span {
+    color: #8a5cf5;
+  }
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #6b7280;
+  max-width: 600px;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+::ng-deep .start-btn {
+  background: #8a5cf5 !important;
+  border: none !important;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+
+  h3 {
+    margin: 0;
+    color: #111827;
+    font-size: 2rem;
+  }
+
+  span {
+    color: #6b7280;
+  }
+}
+
+.image-wrapper {
+  position: relative;
+  text-align: center;
+}
+
+.hero-image {
+  width: 100%;
+  max-width: 650px;
+  animation: float 5s ease-in-out infinite;
+}
+
+.floating-card {
+  position: absolute;
+  background: rgba(255,255,255,.85);
+  backdrop-filter: blur(12px);
+  padding: 14px 20px;
+  border-radius: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,.1);
+  font-weight: 600;
+}
+
+.card-course {
+  top: 15%;
+  left: 0;
+}
+
+.card-rating {
+  top: 50%;
+  right: 0;
+}
+
+.card-students {
+  bottom: 10%;
+  left: 10%;
+}
+
+@keyframes float {
+  0%,100%{
+    transform: translateY(0);
+  }
+
+  50%{
+    transform: translateY(-20px);
+  }
+}
+
+@media(max-width:991px){
+
+  .hero-title{
+    font-size: 2.8rem;
+  }
+
+  .hero-section{
+    padding-top: 5rem;
+  }
+
+  .hero-content{
+    padding: 2rem;
+  }
+
+  .hero-stats{
+    justify-content:center;
+  }
+
+  .hero-buttons{
+    justify-content:center;
+  }
+}

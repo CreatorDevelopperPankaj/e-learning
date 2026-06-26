@@ -1,0 +1,7 @@
+<p-drawer [(visible)]="visible" (onHide)="onClose()" position="left" [blockScroll]="true">
+    <div class="sidebar-header py-3 px-2 text-center text-xl font-bold">
+        E-Learning Platform
+    </div>
+    <hr class="border-top-1 surface-border" />
+    <p-menu [model]="items" styleClass="w-full border-none"></p-menu>
+</p-drawer>

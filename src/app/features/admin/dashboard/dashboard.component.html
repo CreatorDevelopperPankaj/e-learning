@@ -1,0 +1,248 @@
+<div class="dashboard">
+
+  <!-- Welcome -->
+  <div class="welcome-section">
+    <div>
+      <h1>Welcome back, Admin! 👋</h1>
+      <p>Here's what's happening with your platform today.</p>
+    </div>
+
+    <p-button icon="pi pi-calendar" label="May 16, 2025 - Jun 15, 2025" severity="secondary" styleClass="date-btn">
+    </p-button>
+  </div>
+
+  <!-- Stats Cards -->
+
+  <div class="stats-grid">
+
+    <p-card styleClass="stat-card purple">
+      <div class="stat-header">
+        <div class="icon-box">
+          <i class="pi pi-users"></i>
+        </div>
+
+        <div>
+          <span>Total Users</span>
+          <h2>{{totalUsers}}</h2>
+          <small>↑ {{growthUsers}}% from last month</small>
+        </div>
+
+      </div>
+    </p-card>
+
+    <p-card styleClass="stat-card green">
+      <div class="stat-header">
+        <div class="icon-box">
+          <i class="pi pi-user-plus"></i>
+        </div>
+
+        <div>
+          <span>Instructors</span>
+          <h2>{{totalInstructors}}</h2>
+          <small>↑ {{growthInstructors}}% from last month</small>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="stat-card orange">
+      <div class="stat-header">
+        <div class="icon-box">
+          <i class="pi pi-graduation-cap"></i>
+        </div>
+
+        <div>
+          <span>Students</span>
+          <h2>{{totalStudents}}</h2>
+          <small>↑ {{growthStudents}}% from last month</small>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card styleClass="stat-card blue">
+      <div class="stat-header">
+        <div class="icon-box">
+          <i class="pi pi-book"></i>
+        </div>
+
+        <div>
+          <span>Courses</span>
+          <h2>{{totalCourses}}</h2>
+        </div>
+      </div>
+    </p-card>
+
+  </div>
+
+  <!-- Charts -->
+
+  <div class="charts-grid">
+
+    <p-card header="Revenue Overview">
+
+      <div class="revenue-number">
+        ₹12,45,800
+      </div>
+
+      <p-chart type="line" [data]="revenueData" [options]="chartOptions">
+      </p-chart>
+
+    </p-card>
+
+    <p-card header="User Growth">
+
+      <p-chart type="bar" [data]="userGrowthData" [options]="chartOptions">
+      </p-chart>
+
+    </p-card>
+
+    <p-card header="Top Categories">
+
+      <p-chart type="doughnut" [data]="categoryData">
+      </p-chart>
+
+    </p-card>
+
+  </div>
+
+  <!-- Bottom Section -->
+
+  <div class="bottom-grid">
+
+    <!-- Instructor Approvals -->
+
+    <div class="approval-card">
+
+      <div class="card-header">
+
+        <div class="title-section">
+          <div class="title-bar"></div>
+
+          <div>
+            <h2>Pending Instructor Approvals</h2>
+            <p>Review and approve new instructor applications</p>
+          </div>
+        </div>
+
+        <p-button label="View All" icon="pi pi-angle-right" iconPos="right" severity="secondary" [text]="true" (click)="viewAll()">
+        </p-button>
+
+      </div>
+
+      @for(instructor of instructors; track instructor.id){
+
+      <div class="instructor-row">
+
+        <div class="profile-section">
+
+          <div class="avatar-wrapper">
+            <img [src]="instructor.image" alt="profile">
+
+            <div class="verified-badge">
+              <i class="pi pi-check"></i>
+            </div>
+          </div>
+
+          <div class="info-section">
+            <h3>{{ instructor.name }}</h3>
+
+            <div class="email">
+              {{ instructor.email }}
+            </div>
+
+            <div class="tags">
+
+              <span class="skill-tag">
+                <i class="pi pi-code"></i>
+                {{ instructor.skill }}
+              </span>
+
+              <span class="country-tag">
+                <i class="pi pi-map-marker"></i>
+                India
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="experience-section">
+
+          <div class="exp-card">
+            <i class="pi pi-briefcase"></i>
+            <span>{{ instructor.exp }}</span>
+          </div>
+
+          <small>Experience</small>
+
+        </div>
+
+        <div class="action-section">
+
+          <button pButton class="approve-btn" (click)="approveInstructor(instructor)">
+
+            <i class="pi pi-check"></i>
+
+            <span>Approve</span>
+
+          </button>
+
+          <button pButton class="reject-btn" (click)="rejectInstructor(instructor)">
+
+            <i class="pi pi-times"></i>
+
+            <span>Reject</span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+      <div class="footer-info">
+
+        <div>
+          <i class="pi pi-info-circle"></i>
+          <strong>{{ instructors.length }} instructors</strong>
+          awaiting your approval
+        </div>
+
+        <i class="pi pi-users footer-icon"></i>
+
+      </div>
+
+    </div>
+
+    <!-- Activities -->
+
+    <p-card header="Recent Activities">
+
+      <div class="activity-item">
+        <i class="pi pi-user"></i>
+        <span>New Instructor Registered</span>
+      </div>
+
+      <div class="activity-item">
+        <i class="pi pi-book"></i>
+        <span>Course Submitted</span>
+      </div>
+
+      <div class="activity-item">
+        <i class="pi pi-shopping-cart"></i>
+        <span>Student Enrolled</span>
+      </div>
+
+      <div class="activity-item">
+        <i class="pi pi-money-bill"></i>
+        <span>Payment Received</span>
+      </div>
+
+    </p-card>
+
+  </div>
+
+</div>
+<p-confirmDialog></p-confirmDialog>

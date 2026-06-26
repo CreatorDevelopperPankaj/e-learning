@@ -1,0 +1,86 @@
+<div class="profile-dropdown">
+  <button class="notification-button" type="button" (click)="goTo('notifications')">
+    <i class="pi pi-bell"></i>
+    <span class="notification-badge">{{ notificationCount }}</span>
+  </button>
+
+  <button class="profile-trigger" type="button" [class.active]="isOpen" (click)="toggleDropdown()">
+    <span class="avatar">{{ resolvedInitials }}</span>
+
+    <span class="trigger-text">
+      <strong>{{ resolvedName }}</strong>
+      <small>{{ userProfileDetails?.role }}</small>
+    </span>
+
+
+    <i class="pi pi-chevron-down chevron" [class.open]="isOpen"></i>
+  </button>
+
+  @if (isOpen) {
+  <section class="dropdown-panel">
+    <div class="panel-user">
+      <span class="panel-avatar">{{ resolvedInitials }}</span>
+
+      <div>
+        <h4>{{ resolvedName }}</h4>
+        <p>{{ resolvedEmail }}</p>
+      </div>
+
+    </div>
+
+    <div class="menu-list">
+      @if (publicMenuOnly) {
+      <button type="button" class="menu-item dashboard-item" (click)="goTo('dashboard')">
+        <i class="pi pi-th-large"></i>
+        <span>Go to Dashboard</span>
+      </button>
+
+      <!-- Show role tabs only when user is NOT logged in -->
+
+      <button type="button" class="menu-item logout-item" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Logout</span>
+      </button>
+      } @else {
+      @if (showDashboardAction) {
+      <button type="button" class="menu-item dashboard-item" (click)="goTo('dashboard')">
+        <i class="pi pi-th-large"></i>
+        <span>Go to Dashboard</span>
+      </button>
+      }
+
+      <button type="button" class="menu-item" (click)="goTo('profile')">
+        <i class="pi pi-user"></i>
+        <span>My Profile</span>
+      </button>
+
+      <button type="button" class="menu-item" (click)="goTo('settings')">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </button>
+
+      <button type="button" class="menu-item theme-row" (click)="toggleTheme($event)">
+        <span class="theme-label">
+          <i class="pi pi-palette"></i>
+          <span>Theme</span>
+        </span>
+
+        <span class="theme-switch" [class.checked]="darkTheme">
+          <span></span>
+        </span>
+      </button>
+
+      <button type="button" class="menu-item" (click)="goTo('notifications')">
+        <i class="pi pi-bell"></i>
+        <span>Notifications</span>
+      </button>
+       <button type="button" class="menu-item logout-item" (click)="logout()">
+        <i class="pi pi-sign-out"></i>
+        <span>Logout</span>
+      </button>
+      }
+    </div>
+  </section>
+  }
+
+</div>

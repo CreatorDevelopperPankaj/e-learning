@@ -1,0 +1,207 @@
+<div class="my-courses-page">
+
+  <!-- Header -->
+  <div class="courses-header">
+
+    <h1>My Courses</h1>
+
+    <div class="course-tabs">
+
+      @for(tab of tabs; track tab){
+
+        <button
+          class="tab-btn"
+          [class.active]="selectedTab === tab"
+          (click)="selectTab(tab)">
+
+          {{ tab }}
+
+        </button>
+
+      }
+
+    </div>
+
+  </div>
+
+  <!-- Featured Courses -->
+
+  @if(filteredCourses.length){
+
+    <div class="top-courses">
+
+      @for(course of filteredCourses; track course.title){
+
+        <div
+          class="featured-card"
+          [style.background]="course.background">
+
+          <div class="card-top">
+
+            <span class="category">
+              {{ course.category }}
+            </span>
+
+            <i class="pi pi-bookmark"></i>
+
+          </div>
+
+          <h3>{{ course.title }}</h3>
+
+          <div class="progress-section">
+
+            <div class="progress-header">
+
+              <span>Progress</span>
+
+              <span>
+                {{ course.completed }}/{{ course.total }} Lessons
+              </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+              <div
+                class="progress-fill"
+                [style.width.%]="course.progress">
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="card-footer">
+
+            <div class="students">
+
+              <img src="https://i.pravatar.cc/40?img=1">
+              <img src="https://i.pravatar.cc/40?img=2">
+              <img src="https://i.pravatar.cc/40?img=3">
+
+              <span>+110</span>
+
+            </div>
+
+            <button
+              type="button"
+              class="continue-btn"
+              (click)="continueCourse(course)">
+              Continue
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  } @else {
+
+    <div class="empty-state">
+
+      <i class="pi pi-book"></i>
+
+      <h3>No Courses Found</h3>
+
+      <p>
+        No courses available in this category.
+      </p>
+
+    </div>
+
+  }
+
+  <!-- Bottom Layout -->
+
+  <div class="bottom-layout">
+
+    <!-- Lessons -->
+
+    <div class="lessons-card">
+
+      <div class="lesson-header">
+
+        <h2>My Next Lessons</h2>
+
+        <a routerLink="/student/my-courses/lessons">
+          View All Lessons
+        </a>
+
+      </div>
+
+      @for(lesson of lessons; track lesson.title){
+
+        <div class="lesson-row" routerLink="/student/my-courses/ux-fundamentals/learn">
+
+          <div class="lesson-info">
+
+            <h4>{{ lesson.title }}</h4>
+
+            <p>{{ lesson.subtitle }}</p>
+
+          </div>
+
+          <div class="teacher">
+
+            <img [src]="lesson.teacherImage">
+
+            <span>
+              {{ lesson.teacher }}
+            </span>
+
+          </div>
+
+          <div class="duration">
+
+            {{ lesson.duration }}
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+    <!-- Recommendation -->
+
+    <div class="recommend-card">
+
+      <span class="recommend-tag">
+        Design
+      </span>
+
+      <h2>
+        Advanced Typography
+        for Digital Products
+      </h2>
+
+      <p>
+        1,200+ students are already enrolled
+      </p>
+
+      <div class="students">
+
+        <img src="https://i.pravatar.cc/40?img=11">
+        <img src="https://i.pravatar.cc/40?img=12">
+        <img src="https://i.pravatar.cc/40?img=13">
+
+        <span>+100</span>
+
+      </div>
+
+      <button
+        type="button"
+        class="details-btn"
+        (click)="openCourseDetails(recommendedCourse.id)">
+        More Details
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

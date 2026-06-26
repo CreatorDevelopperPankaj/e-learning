@@ -1,0 +1,77 @@
+<div class="student-dashboard">
+
+  <main class="content">
+
+    <app-slider></app-slider>
+
+    <section class="my-courses">
+
+      <div class="section-header">
+        <h2>My Courses</h2>
+        <p>Continue learning your courses and achieve your goals.</p>
+
+        <button class="view-all-btn" type="button" routerLink="/student/my-courses">
+          View All Courses
+        </button>
+      </div>
+
+      <!-- Popular courses (admin managed) -->
+      <div class="course-card" *ngFor="let course of popularCourses">
+        <div class="course-thumbnail">
+          <img [src]="course.thumbnail" [alt]="course.title">
+        </div>
+
+        <div class="course-content">
+          <h3>{{ course.title }}</h3>
+          <p class="short-desc">{{ course.shortDescription }}</p>
+
+          <div class="course-meta">
+            <span>⭐ {{ course.rating }}</span>
+            <span>👥 {{ course.totalStudents }} Students</span>
+            <span>⏱ {{ course.duration }}</span>
+          </div>
+
+          <div class="price-row">
+            <span class="price">{{ course.currency }} {{ course.discountPrice }}</span>
+            <span class="strike" *ngIf="course.discountPrice < course.price">
+              {{ course.currency }} {{ course.price }}
+            </span>
+          </div>
+        </div>
+
+        <div class="course-actions">
+          <div class="last-access">
+            <span>Instructor</span>
+            <strong>{{ course.instructorName }}</strong>
+          </div>
+
+          <button
+            type="button"
+            class="resume-btn"
+            (click)="goToCourse(course)">
+            ▶ View Course
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="overview-grid">
+      <div class="overview-item">
+        <app-learning-overview></app-learning-overview>
+      </div>
+
+      <div class="overview-item">
+        <app-upcoming-deadlines></app-upcoming-deadlines>
+      </div>
+
+      <div class="overview-item">
+        <app-recent-activity></app-recent-activity>
+      </div>
+    </div>
+
+    <app-my-certificates></app-my-certificates>
+
+  </main>
+
+</div>
+

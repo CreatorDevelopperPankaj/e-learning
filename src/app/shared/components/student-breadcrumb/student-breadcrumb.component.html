@@ -1,0 +1,17 @@
+<nav class="student-breadcrumb" aria-label="Student breadcrumb">
+  @for (step of steps; track step.label; let index = $index) {
+    <div class="crumb" [class.completed]="isCompleted(index)" [class.active]="isActive(index)">
+      @if (step.route && !isActive(index)) {
+        <a class="crumb-content" [routerLink]="step.route">
+          <i [class]="getIcon(step.label)"></i>
+          <span>{{ step.label }}</span>
+        </a>
+      } @else {
+        <span class="crumb-content">
+          <i [class]="getIcon(step.label)"></i>
+          <span>{{ step.label }}</span>
+        </span>
+      }
+    </div>
+  }
+</nav>

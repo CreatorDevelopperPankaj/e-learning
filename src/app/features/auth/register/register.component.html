@@ -1,0 +1,559 @@
+<!-- ═══════════════════════════════════════════════════════════
+     Student Registration — Multi-step wizard
+════════════════════════════════════════════════════════════ -->
+<div class="reg-page">
+
+  <!-- ── Left Sidebar ──────────────────────────────────────────── -->
+  <aside class="reg-sidebar">
+    <div class="reg-sidebar__logo">
+      <div class="reg-sidebar__logo-icon">
+        <i class="pi pi-book"></i>
+      </div>
+      <div>
+        <span class="reg-sidebar__logo-title">LMS</span>
+        <span class="reg-sidebar__logo-sub">Learning Management System</span>
+      </div>
+    </div>
+
+    <div class="reg-sidebar__hero">
+      <h2 class="reg-sidebar__title">Student<br><strong>Registration</strong></h2>
+      <p class="reg-sidebar__desc">
+        Create a new student account by filling out the form. All fields marked
+        with <strong>*</strong> are required.
+      </p>
+    </div>
+
+    <div class="reg-sidebar__illustration">
+      <img src="assets/images/ui-ux-illustration.png" alt="Registration illustration" />
+    </div>
+
+    <div class="reg-sidebar__badge">
+      <i class="pi pi-shield"></i>
+      <div>
+        <span class="reg-sidebar__badge-title">Your information is safe with us</span>
+        <span class="reg-sidebar__badge-sub">We use industry-standard security to protect your data.</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ───────────────────────────────────────────── -->
+  <main class="reg-main">
+
+    <!-- Page title -->
+    <div class="reg-header">
+      <h1 class="reg-header__title">Create New Student</h1>
+      <p class="reg-header__sub">Fill in the details to register a new student</p>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="reg-steps">
+      @for (step of steps; track step.id) {
+        <div class="reg-steps__item"
+             [class.reg-steps__item--active]="currentStep() === step.id"
+             [class.reg-steps__item--done]="isStepDone(step.id)"
+             (click)="goToStep(step.id)">
+          <div class="reg-steps__circle">
+            @if (isStepDone(step.id)) {
+              <i class="pi pi-check"></i>
+            } @else {
+              {{ step.id }}
+            }
+          </div>
+          <span class="reg-steps__label">{{ step.label }}</span>
+        </div>
+        @if (step.id < 4) {
+          <div class="reg-steps__line" [class.reg-steps__line--done]="isStepDone(step.id)"></div>
+        }
+      }
+    </div>
+
+    <!-- ── STEP 1 — Personal Info ──────────────────────────────── -->
+    @if (currentStep() === 1) {
+      <form [formGroup]="step1" novalidate>
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-user"></i>
+            <span>Personal Information</span>
+          </div>
+
+          <div class="reg-grid">
+
+            <!-- Profile Photo -->
+            <div class="reg-field reg-field--photo">
+              <label class="reg-label">Profile Photo <span class="req">*</span></label>
+              <div class="photo-upload" (click)="photoInput.click()">
+                @if (photoPreview) {
+                  <img [src]="photoPreview" alt="Preview" class="photo-upload__preview" />
+                } @else {
+                  <div class="photo-upload__placeholder">
+                    <i class="pi pi-image"></i>
+                    <span class="photo-upload__cta">Click to upload</span>
+                    <span class="photo-upload__hint">JPG, PNG or WEBP<br>Max size 2MB</span>
+                  </div>
+                }
+              </div>
+              <input #photoInput type="file" accept="image/jpeg,image/png,image/webp"
+                     hidden (change)="onPhotoChange($event)" />
+            </div>
+
+            <!-- Name row -->
+            <div class="reg-field">
+              <label class="reg-label">First Name <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-user reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="firstName"
+                       placeholder="Enter first name" />
+              </div>
+              @if (step1.controls.firstName.touched && step1.controls.firstName.errors?.['required']) {
+                <small class="reg-error">First name is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Middle Name</label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-user reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="middleName"
+                       placeholder="Enter middle name" />
+              </div>
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Last Name <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-user reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="lastName"
+                       placeholder="Enter last name" />
+              </div>
+              @if (step1.controls.lastName.touched && step1.controls.lastName.errors?.['required']) {
+                <small class="reg-error">Last name is required</small>
+              }
+            </div>
+
+            <!-- Email -->
+            <div class="reg-field">
+              <label class="reg-label">Email Address <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-envelope reg-input-icon"></i>
+                <input class="reg-input" type="email" formControlName="email"
+                       placeholder="Enter email address" />
+              </div>
+              @if (step1.controls.email.touched && step1.controls.email.errors?.['required']) {
+                <small class="reg-error">Email is required</small>
+              }
+              @if (step1.controls.email.touched && step1.controls.email.errors?.['email']) {
+                <small class="reg-error">Enter a valid email</small>
+              }
+            </div>
+
+            <!-- Phone -->
+            <div class="reg-field">
+              <label class="reg-label">Phone Number <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-phone reg-input-icon"></i>
+                <input class="reg-input" type="tel" formControlName="phone"
+                       placeholder="Enter phone number" />
+              </div>
+              @if (step1.controls.phone.touched && step1.controls.phone.errors?.['required']) {
+                <small class="reg-error">Phone number is required</small>
+              }
+            </div>
+
+            <!-- DOB -->
+            <div class="reg-field">
+              <label class="reg-label">Date of Birth <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-calendar reg-input-icon"></i>
+                <input class="reg-input" type="date" formControlName="dob" />
+              </div>
+              @if (step1.controls.dob.touched && step1.controls.dob.errors?.['required']) {
+                <small class="reg-error">Date of birth is required</small>
+              }
+            </div>
+
+            <!-- Password -->
+            <div class="reg-field">
+              <label class="reg-label">Password <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-lock reg-input-icon"></i>
+                <input class="reg-input" type="password" formControlName="password"
+                       placeholder="Enter password" />
+              </div>
+              @if (step1.controls.password.touched && step1.controls.password.errors?.['required']) {
+                <small class="reg-error">Password is required</small>
+              }
+              @if (step1.controls.password.touched && step1.controls.password.errors?.['minlength']) {
+                <small class="reg-error">Minimum 8 characters</small>
+              }
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="reg-field">
+              <label class="reg-label">Confirm Password <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-lock reg-input-icon"></i>
+                <input class="reg-input" type="password" formControlName="confirmPassword"
+                       placeholder="Confirm password" />
+              </div>
+              @if (step1.controls.confirmPassword.touched && step1.errors?.['passwordMismatch']) {
+                <small class="reg-error">Passwords do not match</small>
+              }
+            </div>
+
+            <!-- Gender -->
+            <div class="reg-field">
+              <label class="reg-label">Gender <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-user reg-input-icon"></i>
+                <select class="reg-select" formControlName="gender">
+                  <option value="" disabled>Select gender</option>
+                  @for (g of genderOptions; track g) {
+                    <option [value]="g">{{ g }}</option>
+                  }
+                </select>
+              </div>
+              @if (step1.controls.gender.touched && step1.controls.gender.errors?.['required']) {
+                <small class="reg-error">Gender is required</small>
+              }
+            </div>
+
+          </div>
+        </div>
+      </form>
+    }
+
+    <!-- ── STEP 2 — Address Info ───────────────────────────────── -->
+    @if (currentStep() === 2) {
+      <form [formGroup]="step2" novalidate>
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-map-marker"></i>
+            <span>Address Information</span>
+          </div>
+
+          <div class="reg-grid">
+
+            <div class="reg-field">
+              <label class="reg-label">Country <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-globe reg-input-icon"></i>
+                <select class="reg-select" formControlName="country">
+                  <option value="" disabled>Select country</option>
+                  @for (c of countryOptions; track c) {
+                    <option [value]="c">{{ c }}</option>
+                  }
+                </select>
+              </div>
+              @if (step2.controls.country.touched && step2.controls.country.errors?.['required']) {
+                <small class="reg-error">Country is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">State <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-building reg-input-icon"></i>
+                <select class="reg-select" formControlName="state">
+                  <option value="" disabled>Select state</option>
+                  @for (s of stateOptions; track s) {
+                    <option [value]="s">{{ s }}</option>
+                  }
+                </select>
+              </div>
+              @if (step2.controls.state.touched && step2.controls.state.errors?.['required']) {
+                <small class="reg-error">State is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">District <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-sitemap reg-input-icon"></i>
+                <select class="reg-select" formControlName="district">
+                  <option value="" disabled>Select district</option>
+                  @for (d of districtOptions; track d) {
+                    <option [value]="d">{{ d }}</option>
+                  }
+                </select>
+              </div>
+              @if (step2.controls.district.touched && step2.controls.district.errors?.['required']) {
+                <small class="reg-error">District is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">City <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-building reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="city"
+                       placeholder="Enter city" />
+              </div>
+              @if (step2.controls.city.touched && step2.controls.city.errors?.['required']) {
+                <small class="reg-error">City is required</small>
+              }
+            </div>
+
+            <div class="reg-field reg-field--wide">
+              <label class="reg-label">Address <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-home reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="address"
+                       placeholder="Enter full address" />
+              </div>
+              @if (step2.controls.address.touched && step2.controls.address.errors?.['required']) {
+                <small class="reg-error">Address is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Zip / Postal Code <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-tag reg-input-icon"></i>
+                <input class="reg-input" type="text" formControlName="zip"
+                       placeholder="Enter zip / postal code" />
+              </div>
+              @if (step2.controls.zip.touched && step2.controls.zip.errors?.['required']) {
+                <small class="reg-error">Zip code is required</small>
+              }
+            </div>
+
+          </div>
+        </div>
+      </form>
+    }
+
+    <!-- ── STEP 3 — Academic Info ──────────────────────────────── -->
+    @if (currentStep() === 3) {
+      <form [formGroup]="step3" novalidate>
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-graduation-cap"></i>
+            <span>Academic Information</span>
+          </div>
+
+          <div class="reg-grid">
+
+            <div class="reg-field">
+              <label class="reg-label">Course <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-book reg-input-icon"></i>
+                <select class="reg-select" formControlName="course">
+                  <option value="" disabled>Select course</option>
+                  @for (c of courseOptions; track c) {
+                    <option [value]="c">{{ c }}</option>
+                  }
+                </select>
+              </div>
+              @if (step3.controls.course.touched && step3.controls.course.errors?.['required']) {
+                <small class="reg-error">Course is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Batch (Optional)</label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-users reg-input-icon"></i>
+                <select class="reg-select" formControlName="batch">
+                  <option value="">Select batch</option>
+                  @for (b of batchOptions; track b) {
+                    <option [value]="b">{{ b }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Enrollment Date <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-calendar reg-input-icon"></i>
+                <input class="reg-input" type="date" formControlName="enrollmentDate" />
+              </div>
+              @if (step3.controls.enrollmentDate.touched && step3.controls.enrollmentDate.errors?.['required']) {
+                <small class="reg-error">Enrollment date is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Joining Date <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-calendar reg-input-icon"></i>
+                <input class="reg-input" type="date" formControlName="joiningDate" />
+              </div>
+              @if (step3.controls.joiningDate.touched && step3.controls.joiningDate.errors?.['required']) {
+                <small class="reg-error">Joining date is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Status <span class="req">*</span></label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-shield reg-input-icon"></i>
+                <select class="reg-select" formControlName="status">
+                  <option value="" disabled>Select status</option>
+                  @for (s of statusOptions; track s) {
+                    <option [value]="s">{{ s }}</option>
+                  }
+                </select>
+              </div>
+              @if (step3.controls.status.touched && step3.controls.status.errors?.['required']) {
+                <small class="reg-error">Status is required</small>
+              }
+            </div>
+
+            <div class="reg-field">
+              <label class="reg-label">Initial Progress</label>
+              <div class="reg-input-wrap">
+                <i class="pi pi-chart-bar reg-input-icon"></i>
+                <select class="reg-select" formControlName="initialProgress">
+                  @for (p of progressOptions; track p) {
+                    <option [value]="p">{{ p }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    }
+
+    <!-- ── STEP 4 — Review & Submit ───────────────────────────── -->
+    @if (currentStep() === 4) {
+      <div class="reg-review">
+
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-user"></i><span>Personal Information</span>
+          </div>
+          <div class="reg-review__grid">
+            <div class="reg-review__item">
+              <span class="reg-review__key">Name</span>
+              <span class="reg-review__val">
+                {{ reviewData.firstName }} {{ reviewData.middleName }} {{ reviewData.lastName }}
+              </span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Email</span>
+              <span class="reg-review__val">{{ reviewData.email }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Phone</span>
+              <span class="reg-review__val">{{ reviewData.phone }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Date of Birth</span>
+              <span class="reg-review__val">{{ reviewData.dob }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Gender</span>
+              <span class="reg-review__val">{{ reviewData.gender }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-map-marker"></i><span>Address Information</span>
+          </div>
+          <div class="reg-review__grid">
+            <div class="reg-review__item">
+              <span class="reg-review__key">Country</span>
+              <span class="reg-review__val">{{ reviewData.country }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">State</span>
+              <span class="reg-review__val">{{ reviewData.state }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">City</span>
+              <span class="reg-review__val">{{ reviewData.city }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Address</span>
+              <span class="reg-review__val">{{ reviewData.address }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Zip</span>
+              <span class="reg-review__val">{{ reviewData.zip }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reg-section">
+          <div class="reg-section__head">
+            <i class="pi pi-graduation-cap"></i><span>Academic Information</span>
+          </div>
+          <div class="reg-review__grid">
+            <div class="reg-review__item">
+              <span class="reg-review__key">Course</span>
+              <span class="reg-review__val">{{ reviewData.course }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Batch</span>
+              <span class="reg-review__val">{{ reviewData.batch || '—' }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Enrollment Date</span>
+              <span class="reg-review__val">{{ reviewData.enrollmentDate }}</span>
+            </div>
+            <div class="reg-review__item">
+              <span class="reg-review__key">Status</span>
+              <span class="reg-review__val">{{ reviewData.status }}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      @if (serverError) {
+        <div class="reg-server-error">
+          <i class="pi pi-exclamation-triangle"></i> {{ serverError }}
+        </div>
+      }
+    }
+
+    <!-- ── Note + Navigation ───────────────────────────────────── -->
+    <div class="reg-note">
+      <i class="pi pi-info-circle reg-note__icon"></i>
+      <div>
+        <strong>Note</strong>
+        <p>Please review all the information before submitting. You can go back and edit anytime.</p>
+      </div>
+    </div>
+
+    <div class="reg-footer">
+      <button class="reg-btn reg-btn--back"
+              type="button"
+              [disabled]="currentStep() === 1"
+              (click)="back()">
+        <i class="pi pi-arrow-left"></i> Back
+      </button>
+
+      @if (currentStep() < 4) {
+        <button class="reg-btn reg-btn--next"
+                type="button"
+                (click)="next()">
+          Next <i class="pi pi-arrow-right"></i>
+        </button>
+      } @else {
+        <button class="reg-btn reg-btn--submit"
+                type="button"
+                [disabled]="isSubmitting"
+                (click)="submit()">
+          @if (isSubmitting) {
+            <i class="pi pi-spin pi-spinner"></i> Submitting...
+          } @else {
+            <i class="pi pi-check"></i> Submit Registration
+          }
+        </button>
+      }
+    </div>
+
+    <div class="reg-login-link">
+      Already have an account? <a routerLink="/login">Sign In</a>
+    </div>
+
+    <footer class="reg-copyright">© 2024 LMS. All rights reserved.</footer>
+
+  </main>
+</div>

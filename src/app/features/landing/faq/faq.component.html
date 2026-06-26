@@ -1,0 +1,130 @@
+<div class="faq-page">
+
+  <!-- Hero -->
+
+  <div class="faq-hero">
+
+
+<span class="faq-badge">
+  ❓ Help Center
+</span>
+
+<h1 class="faq-title">
+  Frequently Asked Questions
+</h1>
+
+<p class="faq-subtitle">
+  Everything you need to know about courses,
+  certifications, payments and learning.
+</p>
+
+<div class="search-box">
+  <i class="pi pi-search"></i>
+  <input
+    type="text"
+    placeholder="Search your question..."
+  />
+</div>
+
+
+  </div>
+
+  <!-- Categories -->
+
+  <div class="faq-categories">
+
+
+<div class="category-card">
+  <i class="pi pi-book"></i>
+  <span>Courses</span>
+</div>
+
+<div class="category-card">
+  <i class="pi pi-credit-card"></i>
+  <span>Payments</span>
+</div>
+
+<div class="category-card">
+  <i class="pi pi-file"></i>
+  <span>Certificates</span>
+</div>
+
+<div class="category-card">
+  <i class="pi pi-users"></i>
+  <span>Account</span>
+</div>
+
+<div class="category-card">
+  <i class="pi pi-comments"></i>
+  <span>Support</span>
+</div>
+
+
+  </div>
+
+  <!-- Accordion -->
+
+  <div class="faq-wrapper">
+
+
+<p-accordion [value]="0">
+
+  <p-accordion-panel
+    *ngFor="let faq of faqs; let i=index"
+    [value]="i">
+
+    <p-accordion-header>
+      <div class="faq-header-content">
+        <i class="pi pi-question-circle"></i>
+        {{ faq.question }}
+      </div>
+    </p-accordion-header>
+
+    <p-accordion-content>
+
+      <div class="faq-answer">
+
+        <i class="pi pi-check-circle"></i>
+
+        <p>
+          {{ faq.answer }}
+        </p>
+
+      </div>
+
+    </p-accordion-content>
+
+  </p-accordion-panel>
+
+</p-accordion>
+
+
+  </div>
+
+  <!-- Support Card -->
+
+  <div class="support-card">
+
+
+<div>
+
+  <h2>
+    Still have questions?
+  </h2>
+
+  <p>
+    Our support team is available 24/7 to help you.
+  </p>
+
+</div>
+
+<button
+  pButton
+  label="Contact Support"
+  icon="pi pi-comments">
+</button>
+
+
+  </div>
+
+</div>

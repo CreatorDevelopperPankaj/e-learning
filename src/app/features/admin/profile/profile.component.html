@@ -1,0 +1,209 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="profile-title-sec">
+      <h1>Admin Profile</h1>
+      <p>Manage your account settings, details, and security.</p>
+    </div>
+  </div>
+
+  <div class="profile-grid">
+    <!-- Left Column: Avatar & Quick Info -->
+    <div class="profile-sidebar-card">
+      <div class="avatar-upload-section">
+        <div class="avatar-preview-wrapper" (click)="fileInput.click()">
+          <img
+            [src]="profilePreview || adminProfile?.profileImageFullUrl || 'assets/images/admin.jpg'"
+            alt="Admin Avatar"
+            class="avatar-image"
+            (error)="handleImageError($event)"
+          />
+          <div class="camera-badge">
+            <i class="pi pi-camera"></i>
+          </div>
+        </div>
+        <input
+          #fileInput
+          type="file"
+          accept="image/*"
+          hidden
+          (change)="onFileSelected($event)"
+        />
+        <h3>{{ adminProfile?.name || 'Administrator' }}</h3>
+        <span class="role-badge">System Administrator</span>
+        <p class="email-text">{{ adminProfile?.email }}</p>
+      </div>
+
+      <div class="sidebar-info-list">
+        <div class="info-item">
+          <i class="pi pi-calendar"></i>
+          <div>
+            <label>Joined On</label>
+            <span>{{ adminProfile?.createdAt | date: 'mediumDate' }}</span>
+          </div>
+        </div>
+        <div class="info-item">
+          <i class="pi pi-shield"></i>
+          <div>
+            <label>Account Status</label>
+            <span class="status-verified">Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Edit Form -->
+    <div class="profile-form-card">
+      <div class="card-header">
+        <h2>Account Settings</h2>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-grid">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="pi pi-user input-icon"></i>
+              <input
+                id="name"
+                type="text"
+                formControlName="name"
+                placeholder="Enter your name"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="profileForm.controls.name.touched && profileForm.controls.name.errors?.['required']" class="error-text">
+              Name is required.
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div class="form-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="pi pi-envelope input-icon"></i>
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="Enter email address"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="profileForm.controls.email.touched && profileForm.controls.email.errors?.['required']" class="error-text">
+              Email is required.
+            </div>
+            <div *ngIf="profileForm.controls.email.touched && profileForm.controls.email.errors?.['email']" class="error-text">
+              Please enter a valid email address.
+            </div>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="form-group">
+            <label for="mobileNumber">Mobile Number <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="pi pi-phone input-icon"></i>
+              <input
+                id="mobileNumber"
+                type="text"
+                formControlName="mobileNumber"
+                placeholder="Enter mobile number"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="profileForm.controls.mobileNumber.touched && profileForm.controls.mobileNumber.errors?.['required']" class="error-text">
+              Mobile number is required.
+            </div>
+          </div>
+
+          <!-- Country -->
+          <div class="form-group">
+            <label for="country">Country</label>
+            <div class="input-wrapper">
+              <i class="pi pi-map input-icon"></i>
+              <input
+                id="country"
+                type="text"
+                formControlName="country"
+                placeholder="e.g. India"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <!-- City -->
+          <div class="form-group">
+            <label for="city">City</label>
+            <div class="input-wrapper">
+              <i class="pi pi-building input-icon"></i>
+              <input
+                id="city"
+                type="text"
+                formControlName="city"
+                placeholder="e.g. Dehradun"
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <!-- Password Change -->
+          <div class="form-group">
+            <label for="password">Change Password <span class="hint">(Leave blank to keep current)</span></label>
+            <div class="input-wrapper">
+              <i class="pi pi-lock input-icon"></i>
+              <input
+                id="password"
+                type="password"
+                formControlName="password"
+                placeholder="Min 8 characters"
+                class="form-control"
+              />
+            </div>
+            <div *ngIf="profileForm.controls.password.touched && profileForm.controls.password.errors?.['minlength']" class="error-text">
+              Password must be at least 8 characters.
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="form-group full-width">
+            <label for="bio">Biography / About Me</label>
+            <div class="textarea-wrapper">
+              <textarea
+                id="bio"
+                formControlName="bio"
+                rows="4"
+                placeholder="Write a brief description about yourself..."
+                class="form-control textarea"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feedback Messages -->
+        <div class="message-container">
+          <div class="alert-success" *ngIf="successMessage">
+            <i class="pi pi-check-circle"></i>
+            <span>{{ successMessage }}</span>
+          </div>
+          <div class="alert-danger" *ngIf="errorMessage">
+            <i class="pi pi-exclamation-circle"></i>
+            <span>{{ errorMessage }}</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="save-btn"
+            [disabled]="isSubmitting || profileForm.invalid"
+          >
+            <i class="pi pi-spin pi-spinner" *ngIf="isSubmitting"></i>
+            <i class="pi pi-save" *ngIf="!isSubmitting"></i>
+            <span>{{ isSubmitting ? 'Saving Changes...' : 'Save Profile' }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

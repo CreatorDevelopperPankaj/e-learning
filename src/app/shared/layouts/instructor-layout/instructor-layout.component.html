@@ -1,0 +1,32 @@
+<div class="layout">
+
+  <app-admin-sidebar
+    [collapsed]="isCollapsed"
+    [menuItems]="menuItems">
+  </app-admin-sidebar>
+
+  <div class="main">
+
+    <app-topbar
+      (menuClick)="toggleSidebar()"
+      title="Instructor Dashboard"
+      [userName]="currentUser?.name || ''"
+      [userEmail]="currentUser?.email || ''"
+      [userInitials]="userInitials"
+      [notificationCount]="0">
+    </app-topbar>
+
+    <div class="breadcrumb-wrap">
+      <app-admin-breadcrumb title="Instructor Dashboard"></app-admin-breadcrumb>
+    </div>
+
+    <div class="page-content">
+           <router-outlet></router-outlet>
+
+    </div>
+
+
+  </div>
+
+</div>
+

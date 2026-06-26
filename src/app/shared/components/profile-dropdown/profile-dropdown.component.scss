@@ -1,0 +1,266 @@
+:host {
+  display: inline-flex;
+}
+
+.profile-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.notification-button,
+.profile-trigger,
+.menu-item {
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+
+.notification-button {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  color: #c7d2fe;
+  background: transparent;
+  border-radius: 14px;
+}
+
+.notification-button:hover {
+  background: rgba(124, 92, 255, 0.12);
+}
+
+.notification-button i {
+  font-size: 18px;
+}
+
+.notification-badge {
+  position: absolute;
+  top: 2px;
+  right: 1px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #7c5cff;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.profile-trigger {
+  min-width: 172px;
+  height: 54px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  background: #191d2b;
+  border-radius: 14px;
+}
+
+.profile-trigger.active,
+.profile-trigger:hover {
+  background: #202437;
+}
+
+.avatar,
+.panel-avatar {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: #fff;
+  background: #7657d9;
+  font-weight: 800;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.trigger-text {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.trigger-text strong,
+.panel-user h4 {
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.1;
+}
+
+.trigger-text small,
+.panel-user p {
+  color: #a8b3cf;
+}
+
+.trigger-text small {
+  margin-top: 2px;
+  font-size: 12px;
+}
+
+.chevron {
+  color: #9fb0d9;
+  font-size: 13px;
+  transition: transform 0.18s ease;
+}
+
+.chevron.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 50;
+  width: min(278px, calc(100vw - 32px));
+  overflow: hidden;
+  color: #fff;
+  background: #10141f;
+  border: 1px solid #202536;
+  border-radius: 14px;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.36);
+}
+
+.dropdown-panel::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  right: 22px;
+  width: 14px;
+  height: 14px;
+  background: #10141f;
+  border-left: 1px solid #202536;
+  border-top: 1px solid #202536;
+  transform: rotate(45deg);
+}
+
+.panel-user {
+  position: relative;
+  padding: 20px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid #202536;
+}
+
+.panel-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.panel-user h4,
+.panel-user p {
+  margin: 0;
+}
+
+.panel-user p {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.menu-list {
+  padding: 12px 0;
+}
+
+.menu-item {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: #fff;
+  background: transparent;
+  text-align: left;
+}
+
+.menu-item:hover {
+  background: #171c2a;
+}
+
+.dashboard-item {
+  color: #c4b5fd;
+  font-weight: 700;
+}
+
+.logout-item {
+  color: #fca5a5;
+  font-weight: 700;
+}
+
+.logout-item i {
+  color: #f87171;
+}
+
+.menu-item i {
+  width: 18px;
+  color: #7c5cff;
+  font-size: 18px;
+}
+
+.theme-row {
+  justify-content: space-between;
+}
+
+.theme-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-switch {
+  width: 42px;
+  height: 24px;
+  padding: 3px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: #232839;
+  transition: background 0.18s ease;
+}
+
+.theme-switch span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.18s ease;
+}
+
+.theme-switch.checked {
+  background: #7c5cff;
+}
+
+.theme-switch.checked span {
+  transform: translateX(18px);
+}
+
+@media (max-width: 768px) {
+  .profile-trigger {
+    min-width: 0;
+    width: 54px;
+    justify-content: center;
+  }
+
+  .trigger-text,
+  .chevron {
+    display: none;
+  }
+}

@@ -1,0 +1,70 @@
+<aside
+  class="sidebar"
+  [class.collapsed]="collapsed">
+
+  <div class="brand">
+
+    <div class="brand-icon">
+      <i class="pi pi-graduation-cap"></i>
+    </div>
+
+    @if(!collapsed){
+      <span>EduPrime</span>
+    }
+
+  </div>
+
+  <ul class="menu">
+
+    @for(item of menuItems; track item.label){
+
+      <li routerLinkActive="active">
+
+        <a [routerLink]="item.routerLink">
+
+          <i [class]="item.icon"></i>
+
+          @if(!collapsed){
+            <span>{{ item.label }}</span>
+          }
+
+        </a>
+
+      </li>
+
+    }
+
+  </ul>
+
+    <!-- Bottom Section -->
+  <div class="sidebar-footer">
+
+    <div class="upgrade-card">
+
+      <div class="upgrade-icon">
+        <i class="pi pi-crown"></i>
+      </div>
+
+      <h4>Upgrade to Pro Plan</h4>
+
+      <p>
+        Unlock all courses,
+        certificates and exclusive content.
+      </p>
+
+      <button>
+        Upgrade Now
+      </button>
+
+    </div>
+
+    <div class="help-support">
+
+      <i class="pi pi-question-circle"></i>
+
+      <span>Help & Support</span>
+
+    </div>
+
+  </div>
+</aside>

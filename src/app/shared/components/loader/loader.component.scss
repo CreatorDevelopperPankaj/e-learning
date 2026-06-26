@@ -1,0 +1,44 @@
+.app-loader-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, .34);
+  backdrop-filter: blur(2px);
+}
+
+.app-loader {
+  min-width: 132px;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, .24);
+  color: #111827;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  font-size: .92rem;
+  font-weight: 600;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #dbe3f0;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: spin .75s linear infinite;
+}
+
+.loader-text {
+  line-height: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,41 @@
+<section class="popular-courses">
+
+  <div class="section-header">
+    <h2>Popular Courses</h2>
+  </div>
+  <p-carousel [value]="popularCourses" [numVisible]="3" [numScroll]="1" [circular]="true"
+    [responsiveOptions]="responsiveOptions">
+
+    <ng-template pTemplate="item" let-course>
+
+      <div class="course-card">
+
+        <div class="card-icon">
+          <img [src]="course.image" [alt]="course.title">
+        </div>
+
+        <div class="card-content">
+
+          <div class="rating-section">
+            <i class="pi pi-star-fill"></i>
+            <span>{{ course.rating }}</span>
+          </div>
+
+          <div class="card-title">
+            {{ course.title }}
+          </div>
+
+          <div class="students">
+            <i class="pi pi-users"></i>
+            {{ course.students }} Students
+          </div>
+
+        </div>
+
+      </div>
+
+    </ng-template>
+
+  </p-carousel>
+
+</section>

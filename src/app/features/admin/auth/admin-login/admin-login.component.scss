@@ -1,0 +1,212 @@
+.auth-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+}
+
+/* Background Image */
+.auth-background {
+  position: absolute;
+  inset: 0;
+
+  background-image: url('../../../../../assets/images/admin-login-bg.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transform: scale(1.05);
+}
+
+/* Dark Overlay */
+.overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.88),
+      rgba(30, 41, 59, 0.78)
+    );
+
+  backdrop-filter: blur(2px);
+}
+
+/* Login Card */
+.auth-card {
+  position: relative;
+  z-index: 10;
+
+  width: 100%;
+  max-width: 460px;
+
+  padding: 36px;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.12);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.3);
+
+  color: white;
+}
+
+/* Brand */
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.logo {
+  width: 58px;
+  height: 58px;
+
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3b82f6,
+      #8b5cf6
+    );
+
+  box-shadow:
+    0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+.logo mat-icon {
+  color: white;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.brand-section h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: white;
+}
+
+.brand-section span {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+}
+
+/* Heading */
+h1 {
+  margin: 0;
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 10px 0 24px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Fields */
+.field-group {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.auth-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin: 10px 0 20px;
+}
+
+/* Error */
+.server-error {
+  color: #fecaca;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Login Button */
+.signin-btn {
+  width: 100%;
+  height: 50px !important;
+
+  border-radius: 14px !important;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Material Field Styling */
+::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+::ng-deep .mdc-text-field--outlined {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .mat-mdc-input-element {
+  color: white !important;
+}
+
+::ng-deep .mat-mdc-input-element::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+::ng-deep .mdc-floating-label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+::ng-deep .mat-icon {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+::ng-deep .mdc-checkbox__background {
+  border-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+
+  .auth-card {
+    padding: 24px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+}

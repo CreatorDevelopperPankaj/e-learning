@@ -1,0 +1,12 @@
+<div class="chat-messages">
+  <p-scrollPanel styleClass="chat-messages__scroll">
+    <div class="chat-messages__list">
+      <div *ngFor="let msg of messages()" class="chat-message">
+        <mat-icon class="chat-message__icon">chat_bubble</mat-icon>
+        <div class="chat-message__content">
+          <div class="chat-message__text">{{ msg.text }}</div>
+        </div>
+      </div>
+    </div>
+  </p-scrollPanel>
+</div>

@@ -1,0 +1,388 @@
+<!-- ═══════════════════════════════════════════════════════════
+     Admin › Students
+════════════════════════════════════════════════════════════ -->
+<div class="students-page">
+
+  <!-- ── Page Header ──────────────────────────────────────────── -->
+  <div class="page-header">
+    <div class="page-header__title">
+      <h1>Students</h1>
+      <p>Manage all registered students</p>
+    </div>
+    <button pButton icon="pi pi-download" label="Export CSV" class="p-button-outlined export-btn" (click)="exportCSV()">
+    </button>
+  </div>
+
+  <!-- ── Stat Cards ────────────────────────────────────────────── -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--purple">
+        <i class="pi pi-graduation-cap"></i>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value">{{ totalCount | number }}</span>
+        <span class="stat-card__label">Total Students</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--green">
+        <i class="pi pi-check-circle"></i>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value">{{ activeCount | number }}</span>
+        <span class="stat-card__label">Active Students</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--red">
+        <i class="pi pi-ban"></i>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value">{{ suspendedCount | number }}</span>
+        <span class="stat-card__label">Suspended Students</span>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-card__icon stat-card__icon--blue">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="stat-card__body">
+        <span class="stat-card__value">{{ newRegistrationsCount | number }}</span>
+        <span class="stat-card__label">New Registrations</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="filter-bar">
+
+    <div class="filter-bar__search">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" placeholder="Search by name or email..." [ngModel]="searchText"
+        (input)="onSearchInput($any($event.target).value)" />
+    </div>
+
+    <p-select [options]="statusList" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value"
+      placeholder="All Status" (onChange)="onFilterChange()" styleClass="filter-select">
+    </p-select>
+
+    <p-select [options]="countryList" [(ngModel)]="selectedCountry" optionLabel="label" optionValue="value"
+      placeholder="All Countries" (onChange)="onFilterChange()" styleClass="filter-select">
+    </p-select>
+
+    <button pButton icon="pi pi-refresh" label="Reset" class="p-button-outlined reset-btn" (click)="resetFilters()">
+    </button>
+
+    <button pButton icon="pi pi-filter" label="Apply Filters" class="apply-btn" (click)="applyFilters()">
+    </button>
+
+  </div>
+
+  <!-- ── Table ──────────────────────────────────────────────────── -->
+  <div class="table-card">
+
+    <!-- Loading skeleton -->
+    <div *ngIf="isLoading" class="table-loading">
+      <i class="pi pi-spin pi-spinner"></i>
+      <span>Loading students…</span>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="!isLoading && serverError" class="table-error">
+      <i class="pi pi-exclamation-triangle"></i>
+      <span>{{ serverError }}</span>
+    </div>
+
+    <p-table *ngIf="!isLoading && !serverError" [value]="pagedStudents" [(selection)]="selectedRows" dataKey="id"
+      [rowHover]="true" styleClass="students-table" responsiveLayout="scroll">
+
+      <!-- Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>Student</th>
+          <th>Country</th>
+          <th>City</th>
+          <th>Joined On</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </ng-template>
+
+      <!-- Rows -->
+      <ng-template pTemplate="body" let-student>
+        <tr>
+
+          <!-- Checkbox -->
+          <td>
+            <p-tableCheckbox [value]="student"></p-tableCheckbox>
+          </td>
+
+          <!-- Student -->
+          <td>
+            <div class="student-cell">
+              <img [src]="student.profileImageFullUrl || student.profileImage || avatarFallback" [alt]="student.name"
+                class="student-cell__avatar" />
+              <div class="student-cell__info">
+                <span class="student-cell__name">{{ student.name }}</span>
+                <span class="student-cell__email">{{ student.email }}</span>
+              </div>
+            </div>
+          </td>
+
+          <!-- Course -->
+          <td class="course-cell">{{ student.country || '—' }}</td>
+
+          <!-- Country -->
+          <td>
+            <div class="country-cell">
+              <span>{{ student.city || '—' }}</span>
+            </div>
+          </td>
+
+          <!-- Joined On -->
+          <td class="date-cell">{{ student.joinedAt | date: 'd MMM y' }}</td>
+
+          <!-- Status -->
+          <td>
+            <p-tag [value]="student.status" [severity]="statusSeverity(student.status)" [rounded]="true"
+              styleClass="status-tag status-tag--{{ student.status | lowercase }}">
+            </p-tag>
+          </td>
+
+          <!-- Actions -->
+          <td>
+            <div class="action-btns">
+
+              <!-- View (always shown) -->
+              <button pButton pRipple pTooltip="View Details" tooltipPosition="top" icon="pi pi-eye"
+                class="p-button-rounded p-button-text action-btn action-btn--view" (click)="editStudent(student)">
+              </button>
+
+              <!-- Active → can edit & suspend -->
+              <ng-container *ngIf="student.status === 'Active'">
+                <button pButton pRipple pTooltip="Edit" tooltipPosition="top" icon="pi pi-pencil"
+                  class="p-button-rounded p-button-text action-btn action-btn--edit" (click)="editStudent(student)">
+                </button>
+                <button pButton pRipple pTooltip="Suspend" tooltipPosition="top" icon="pi pi-ban"
+                  class="p-button-rounded p-button-text action-btn action-btn--suspend" (click)="suspend(student.id)">
+                </button>
+              </ng-container>
+
+              <!-- Suspended → activate -->
+              <ng-container *ngIf="student.status === 'Suspended'">
+                <button pButton pRipple pTooltip="Edit" tooltipPosition="top" icon="pi pi-pencil"
+                  class="p-button-rounded p-button-text action-btn action-btn--edit" (click)="editStudent(student)">
+                </button>
+                <button pButton pRipple pTooltip="Activate" tooltipPosition="top" icon="pi pi-check-circle"
+                  class="p-button-rounded p-button-text action-btn action-btn--activate" (click)="activate(student.id)">
+                </button>
+              </ng-container>
+
+            </div>
+          </td>
+
+        </tr>
+      </ng-template>
+
+      <!-- Empty state -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" class="empty-state">
+            <i class="pi pi-inbox"></i>
+            <span>No students found</span>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+
+    <!-- ── Bulk Actions + Pagination ────────────────────────────── -->
+    <div class="table-footer">
+
+      <!-- Bulk actions -->
+      <div class="bulk-actions">
+        <span class="bulk-actions__count">{{ selectedRows.length }} selected</span>
+
+        <button pButton pRipple icon="pi pi-trash" label="Delete Selected"
+          class="p-button-text p-button-danger bulk-btn" [disabled]="selectedRows.length === 0" (click)="bulkDelete()">
+        </button>
+
+        <button pButton pRipple icon="pi pi-ban" label="Suspend Selected"
+          class="p-button-text bulk-btn bulk-btn--suspend" [disabled]="selectedRows.length === 0"
+          (click)="bulkAction('suspend')">
+        </button>
+
+        <button pButton pRipple icon="pi pi-check-circle" label="Activate Selected"
+          class="p-button-text bulk-btn bulk-btn--activate" [disabled]="selectedRows.length === 0"
+          (click)="bulkAction('activate')">
+        </button>
+
+        <button pButton pRipple icon="pi pi-upload" label="Export Selected"
+          class="p-button-text bulk-btn bulk-btn--export" [disabled]="selectedRows.length === 0"
+          (click)="exportSelected()">
+        </button>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button pButton pRipple icon="pi pi-chevron-left" class="p-button-text p-button-rounded pag-arrow"
+          [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+        </button>
+
+        <button *ngFor="let p of pageNumbers" pButton pRipple [label]="p.toString()" class="p-button-rounded pag-num"
+          [ngClass]="{ 'pag-num--active': p === currentPage }" (click)="goToPage(p)">
+        </button>
+
+        <span *ngIf="totalPages > 5" class="pag-ellipsis">…</span>
+
+        <button *ngIf="totalPages > 5" pButton pRipple [label]="totalPages.toString()" class="p-button-rounded pag-num"
+          [ngClass]="{ 'pag-num--active': totalPages === currentPage }" (click)="goToPage(totalPages)">
+        </button>
+
+        <button pButton pRipple icon="pi pi-chevron-right" class="p-button-text p-button-rounded pag-arrow"
+          [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<p-dialog [(visible)]="visible" [modal]="true" [draggable]="false" [resizable]="false" [closable]="true"
+  [style]="{ width: '560px' }" styleClass="edit-student-dialog" (onHide)="onCancel()">
+
+  <!-- ── Header ── -->
+  <ng-template pTemplate="header">
+    <span class="dialog-title">View Student</span>
+  </ng-template>
+
+  <!-- ── Body ── -->
+  <ng-template pTemplate="content">
+    <div class="dialog-body" *ngIf="form">
+
+      <!-- Left: avatar -->
+      <div class="avatar-col">
+        <div class="avatar-wrap">
+          <img [src]="avatarPreview || avatarFallback" alt="Student photo" class="avatar-img" />
+          <ng-container *ngIf="!isButtonDisabled">
+            <label class="avatar-upload" pTooltip="Change photo" tooltipPosition="top">
+              <i class="pi pi-camera"></i>
+              <input type="file" accept="image/*" (change)="onAvatarChange($event)" hidden />
+            </label>
+          </ng-container>
+
+        </div>
+        <p class="avatar-name">{{ form.get('fullName')?.value || editingStudent?.name }}</p>
+        <p-tag [value]="form.get('status')?.value" [severity]="statusSeverity(form.get('status')?.value)"
+          [rounded]="true" styleClass="avatar-status">
+        </p-tag>
+        <span class="avatar-joined" *ngIf="editingStudent?.joinedAt">
+          Joined on {{ editingStudent!.joinedAt | date: 'd MMM y' }}
+        </span>
+      </div>
+
+      <!-- Right: form fields -->
+      <div class="fields-col" [formGroup]="form">
+
+        <div class="field-row">
+          <!-- Full Name -->
+          <div class="field">
+            <label>Full Name <span class="req">*</span></label>
+            <input pInputText formControlName="fullName" placeholder="Full name" />
+            <small class="field-error" *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched">
+              Full name is required
+            </small>
+          </div>
+
+          <!-- Email -->
+          <div class="field">
+            <label>Email <span class="req">*</span></label>
+            <input pInputText formControlName="email" placeholder="Email address" />
+            <small class="field-error" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+              Valid email is required
+            </small>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <!-- Phone -->
+          <div class="field">
+            <label>Phone Number</label>
+            <input pInputText formControlName="phone" placeholder="+91 00000 00000" />
+          </div>
+
+          <!-- Country -->
+          <div class="field">
+            <label>Country</label>
+            <p-select formControlName="country" [options]="countryList" optionLabel="label" optionValue="value"
+              placeholder="Select country" styleClass="w-full">
+            </p-select>
+          </div>
+        </div>
+
+        <!-- Bio -->
+        <div class="field field--full">
+          <label>Bio</label>
+          <input pInputText formControlName="bio" placeholder="Short bio..." />
+        </div>
+
+        <!-- Status -->
+        <div class="field-row">
+          <div class="field">
+            <label>Status <span class="req">*</span></label>
+            <p-select formControlName="status" [options]="statusList" optionLabel="label" optionValue="value"
+              placeholder="Select status" styleClass="w-full">
+            </p-select>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <!-- Password -->
+          <div class="field">
+            <label>New Password</label>
+            <p-password formControlName="password" placeholder="Leave blank to keep current" [feedback]="false"
+              [toggleMask]="true" styleClass="w-full">
+            </p-password>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="field">
+            <label>Confirm Password</label>
+            <p-password formControlName="confirmPassword" placeholder="••••••••" [feedback]="false" [toggleMask]="true"
+              styleClass="w-full">
+            </p-password>
+            <small class="field-error"
+              *ngIf="form.errors?.['passwordMismatch'] && form.get('confirmPassword')?.touched">
+              Passwords do not match
+            </small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- ── Footer ── -->
+  <ng-container *ngIf="!isButtonDisabled">
+
+    <ng-template pTemplate="footer">
+      <div class="dialog-footer">
+        <button pButton label="Cancel" class="p-button-outlined cancel-btn" (click)="onCancel()">
+        </button>
+        <button pButton label="Update Student" class="update-btn" [disabled]="form?.invalid || isSaving"
+          [loading]="isSaving" (click)="onSubmit()">
+        </button>
+      </div>
+    </ng-template>
+  </ng-container>
+
+
+
+</p-dialog>

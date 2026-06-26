@@ -1,0 +1,59 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat {
+  height: 96px;
+
+  border-radius: 18px;
+
+  padding: 18px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+}
+
+.stat i {
+  font-size: 24px;
+}
+
+.stat h2 {
+  margin: 0;
+
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.stat span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.purple {
+  background: #f5f3ff;
+  color: #6366f1;
+}
+
+.green {
+  background: #ecfdf5;
+  color: #16a34a;
+}
+
+.orange {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}

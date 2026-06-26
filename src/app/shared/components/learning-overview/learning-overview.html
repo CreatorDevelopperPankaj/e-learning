@@ -1,0 +1,24 @@
+<div class="overview-card">
+
+    <h3>Learning Overview</h3>
+
+    <div class="stats-grid">
+
+        @for(stat of stats; track stat.title){
+
+        <div class="stat" [class]="stat.class" [routerLink]="stat.route">
+
+            <i [class]="stat.icon"></i>
+
+            <div>
+                <h2>{{ stat.value }}</h2>
+                <span>{{ stat.title }}</span>
+            </div>
+
+        </div>
+
+        }
+
+    </div>
+
+</div>

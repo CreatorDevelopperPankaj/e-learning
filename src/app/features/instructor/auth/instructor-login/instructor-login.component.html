@@ -1,0 +1,70 @@
+<div class="auth-page">
+
+  <div class="content-wrapper">
+
+    <div class="hero-content">
+      <span class="tag">EMPOWERING EDUCATORS</span>
+
+      <h1>
+        Create. Teach.
+        <span>Inspire.</span>
+      </h1>
+
+      <p>
+        Join thousands of instructors who are building successful online
+        courses and impacting lives across the world.
+      </p>
+    </div>
+
+    <form
+      class="login-card"
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()"
+      novalidate>
+
+      <div class="card-icon">
+        <i class="pi pi-graduation-cap"></i>
+      </div>
+
+      <h2>Welcome Back!</h2>
+
+      <p class="card-subtitle">
+        Sign in to continue to your instructor dashboard
+      </p>
+
+      <mat-form-field appearance="outline" class="field-group">
+        <mat-label>Email Address</mat-label>
+        <input
+          matInput
+          type="email"
+          formControlName="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field-group">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="password">
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        type="submit"
+        class="signin-btn">
+
+        Sign In
+      </button>
+
+      <div class="signup-link">
+        New Instructor?
+        <a routerLink="/instructor/register">
+          Create an account
+        </a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

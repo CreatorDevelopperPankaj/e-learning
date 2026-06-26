@@ -1,0 +1,27 @@
+<div class="layout">
+
+  <app-student-sidebar
+    [collapsed]="isCollapsed"
+    [menuItems]="menuItems">
+  </app-student-sidebar>
+
+  <div class="main">
+
+    <app-topbar
+      (menuClick)="toggleSidebar()">
+    </app-topbar>
+
+    <div class="breadcrumb-wrap">
+      <app-student-breadcrumb></app-student-breadcrumb>
+    </div>
+
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
+
+
+
+
+  </div>
+
+</div>

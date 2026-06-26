@@ -1,0 +1,30 @@
+/* instructor layout styles (reuse admin layout look) */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.breadcrumb-wrap {
+  padding: 18px 32px 0;
+  flex-shrink: 0;
+}
+
+.page-content {
+  min-width: 0;
+  flex: 1;
+  padding: 0;
+  overflow: auto;
+}
+
+
+
+

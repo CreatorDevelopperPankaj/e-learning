@@ -1,0 +1,30 @@
+.sidebar-left{
+  height: 100%;
+  padding: 12px;
+  border-right: 1px solid rgba(0,0,0,0.06);
+  overflow: auto;
+  background: var(--surface-ground, #fff);
+}
+
+.sidebar-left__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom: 12px;
+}
+
+.sidebar-left__title{
+  font-weight: 600;
+}
+
+.sidebar-left__body{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+}
+
+.muted{
+  color: rgba(0,0,0,0.6);
+  margin: 0;
+}
+

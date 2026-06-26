@@ -1,0 +1,450 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+}
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+body {
+  background: #f6f8fc;
+}
+
+/* ===========================
+   DASHBOARD LAYOUT
+=========================== */
+
+.student-dashboard {
+  width: 100%;
+  padding: 24px 32px 40px;
+}
+
+.content {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ===========================
+   MY COURSES
+=========================== */
+
+.my-courses {
+  background: #fff;
+  border-radius: 24px;
+  padding: 28px;
+  border: 1px solid #eef2f7;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.section-header p {
+  margin-top: 6px;
+  color: #64748b;
+}
+
+.view-all-btn {
+  border: none;
+  outline: none;
+
+  background: #4f46e5;
+  color: #fff;
+
+  padding: 12px 24px;
+
+  border-radius: 14px;
+
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+.view-all-btn:hover {
+  background: #4338ca;
+}
+
+/* ===========================
+   COURSE CARD
+=========================== */
+
+.course-card {
+  background: #fff;
+
+  border-radius: 24px;
+
+  padding: 24px;
+
+  margin-bottom: 20px;
+
+  border: 1px solid #eef2f7;
+
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.04);
+
+  display: grid;
+
+  grid-template-columns:
+    140px
+    1fr
+    220px;
+
+  gap: 24px;
+}
+
+.course-thumbnail img {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 18px;
+
+  object-fit: cover;
+}
+
+.course-content h3 {
+  font-size: 26px;
+  font-weight: 700;
+
+  margin-bottom: 8px;
+
+  color: #111827;
+}
+
+.course-content p {
+  color: #64748b;
+  margin-bottom: 20px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 8px;
+}
+
+.progress-header span {
+  color: #64748b;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+
+  background: #e5e7eb;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.course-meta {
+  display: flex;
+  gap: 24px;
+
+  margin-top: 18px;
+
+  color: #475569;
+  font-size: 14px;
+}
+
+/* ===========================
+   COURSE ACTIONS
+=========================== */
+
+.course-actions {
+  border-left: 1px solid #e5e7eb;
+
+  padding-left: 24px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 20px;
+}
+
+.last-access {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.last-access span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.resume-btn {
+  border: none;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  color: white;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: .3s ease;
+}
+
+.resume-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   DASHBOARD OVERVIEW
+=========================== */
+
+.dashboard-overview {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 1fr;
+  gap: 20px;
+  // width: 100%;
+}
+
+/* ===========================
+   CERTIFICATES
+=========================== */
+
+// app-my-certificates {
+//   display: block;
+//   width: 100%;
+// }
+
+/* ===========================
+   LARGE TABLET
+=========================== */
+
+@media (max-width: 1200px) {
+
+  .dashboard-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .course-card {
+    grid-template-columns: 120px 1fr;
+  }
+
+  .course-actions {
+    grid-column: 1 / -1;
+
+    border-left: none;
+    border-top: 1px solid #e5e7eb;
+
+    padding-left: 0;
+    padding-top: 16px;
+
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width: 992px) {
+
+  .student-dashboard {
+    padding: 20px;
+  }
+
+  .section-header h2 {
+    font-size: 28px;
+  }
+
+  .course-content h3 {
+    font-size: 22px;
+  }
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px) {
+
+  .student-dashboard {
+    padding: 16px;
+  }
+
+  .my-courses {
+    padding: 20px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .section-header h2 {
+    font-size: 24px;
+  }
+
+  .view-all-btn {
+    width: 100%;
+  }
+
+  .course-card {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .course-thumbnail img {
+    width: 100%;
+    height: 200px;
+  }
+
+  .course-content h3 {
+    font-size: 20px;
+  }
+
+  .course-meta {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .course-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .resume-btn {
+    width: 100%;
+  }
+}
+
+/* ===========================
+   SMALL MOBILE
+=========================== */
+
+@media (max-width: 480px) {
+
+  .section-header h2 {
+    font-size: 22px;
+  }
+
+  .course-thumbnail img {
+    height: 180px;
+  }
+
+  .course-content h3 {
+    font-size: 18px;
+  }
+
+  .course-meta {
+    font-size: 13px;
+  }
+}
+
+.overview-grid {
+  display: grid;
+background: #fff;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+    border: 1px solid #eef2f7;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  grid-template-columns:
+    minmax(320px, 1.2fr)
+    minmax(320px, 1.2fr)
+    minmax(320px, 1fr);
+
+  gap: 24px;
+
+  width: 100%;
+}
+
+.overview-item {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Tablet */
+
+@media (max-width: 1200px) {
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .overview-grid {
+    gap: 16px;
+  }
+
+}
+
+.dashboard-card {
+  background: #ffffff;
+
+  border-radius: 24px;
+
+  border: 1px solid #eef2f7;
+
+  padding: 24px;
+
+  height: 100%;
+
+  box-shadow:
+    0 4px 20px rgba(15, 23, 42, 0.04);
+
+  transition: all .3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.dashboard-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+
+  color: #111827;
+
+  margin-bottom: 24px;
+}
