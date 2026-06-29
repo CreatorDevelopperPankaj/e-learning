@@ -1,12 +1,15 @@
 <div class="chat-messages">
-  <p-scrollPanel styleClass="chat-messages__scroll">
-    <div class="chat-messages__list">
-      <div *ngFor="let msg of messages()" class="chat-message">
-        <mat-icon class="chat-message__icon">chat_bubble</mat-icon>
-        <div class="chat-message__content">
-          <div class="chat-message__text">{{ msg.text }}</div>
-        </div>
-      </div>
-    </div>
-  </p-scrollPanel>
+  <div class="date"><span>{{ loading ? 'Loading messages…' : 'Today' }}</span></div>
+  <div class="empty" *ngIf="!loading && !messages.length">No messages yet. Start the conversation.</div>
+  <div *ngFor="let message of messages" class="message-row" [class.own]="message.senderId === currentUserId" [class.instructor]="message.senderId !== currentUserId">
+    <div *ngIf="message.senderId !== currentUserId" class="avatar avatar--john">{{ initials(message.senderName) }}<i></i></div>
+    <article [class.own-bubble]="message.senderId === currentUserId" [class.message-card]="message.senderId !== currentUserId">
+      <header><div><strong>{{ message.senderName || 'Course member' }}</strong><b *ngIf="message.senderRole !== 'STUDENT'">{{ message.senderRole }}</b><time>{{ message.createdAt | date:'shortTime' }}</time></div><span><button (click)="pin.emit(message)" [attr.aria-label]="message.isPinned ? 'Unpin' : 'Pin'"><mat-icon>{{ message.isPinned ? 'bookmark' : 'bookmark_border' }}</mat-icon></button><mat-icon>more_vert</mat-icon></span></header>
+      <div class="reply" *ngIf="message.replyTo"><mat-icon>subdirectory_arrow_right</mat-icon> Replying to a message</div>
+      <p>{{ message.text }}</p>
+      <div class="attachment" *ngFor="let file of message.attachments"><span class="file-icon">{{ (file.mimeType || '').includes('pdf') ? 'PDF' : 'FILE' }}</span><div><b>{{ file.name || file.fileName }}</b><small>{{ (file.size || file.sizeBytes || 0) / 1048576 | number:'1.1-1' }} MB</small></div><a [href]="file.url" target="_blank" aria-label="Download"><mat-icon>file_download</mat-icon></a></div>
+      <footer><div class="reactions"><button *ngFor="let reaction of message.reactions" (click)="react.emit({message:message,emoji:reaction.emoji})">{{ reaction.emoji }} {{ reaction.userIds.length }}</button><button (click)="react.emit({message:message,emoji:'👍'})">＋</button></div><small><mat-icon>group</mat-icon> Seen by {{ message.seenBy.length }}</small></footer>
+    </article>
+    <div *ngIf="message.senderId === currentUserId" class="avatar avatar--rahul">{{ initials(message.senderName) }}</div>
+  </div>
 </div>

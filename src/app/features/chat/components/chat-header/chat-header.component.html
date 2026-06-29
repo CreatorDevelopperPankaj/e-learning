@@ -1,11 +1,4 @@
-<div class="chat-header">
-  <div class="chat-header__left">
-    <mat-icon class="chat-header__icon">chat</mat-icon>
-    <div class="chat-header__title">{{ headerText() }}</div>
-  </div>
-
-  <div class="chat-header__actions">
-    <button pButton type="button" label="Info" icon="pi pi-info-circle" class="p-button-text"></button>
-  </div>
-</div>
-
+<header class="chat-header">
+  <div class="course-head"><button class="icon-btn back" aria-label="Back"><mat-icon>arrow_back</mat-icon></button><div class="angular-logo">A</div><div class="course-copy"><div><strong>{{title}}</strong><mat-icon>keyboard_arrow_down</mat-icon></div><span>Batch A&nbsp;&nbsp;•&nbsp;&nbsp;32 Students</span></div><span class="live"><i></i>Live Now</span></div>
+  <div class="actions"><label class="search"><mat-icon>search</mat-icon><input #query type="search" placeholder="Search messages, files..." (keydown.enter)="searchMessages.emit(query.value)"><kbd>Ctrl + K</kbd></label><button class="icon-btn" aria-label="Audio call"><mat-icon>call</mat-icon></button><button class="icon-btn" aria-label="Video call"><mat-icon>videocam</mat-icon></button><button class="icon-btn" aria-label="Pinned messages"><mat-icon>push_pin</mat-icon></button><button class="icon-btn notify" aria-label="Notifications"><mat-icon>notifications_none</mat-icon><b>8</b></button><div class="profile"><span>JS<i></i></span><div><b>John Smith</b><small>Instructor</small></div><button class="icon-btn"><mat-icon>more_vert</mat-icon></button></div></div>
+</header>

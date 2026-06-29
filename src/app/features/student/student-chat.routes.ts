@@ -5,6 +5,11 @@ import { ChatShellComponent } from '../chat/chat-shell/chat-shell.component';
 
 export const studentChatRoutes: Routes = [
   {
+    path: '',
+    component: ChatShellComponent,
+    canActivate: [AuthChatGuard]
+  },
+  {
     path: ':courseId',
     component: ChatShellComponent,
     canActivate: [AuthChatGuard]
@@ -15,4 +20,5 @@ export const studentChatRoutes: Routes = [
     canActivate: [AuthChatGuard]
   }
 ];
+
 

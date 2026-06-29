@@ -1,0 +1,2 @@
+import{HttpClient}from'@angular/common/http';import{inject,Injectable}from'@angular/core';import{environment}from'../../../../environments/environment';
+@Injectable({providedIn:'root'})export class AiTutorService{private h=inject(HttpClient);private b=`${environment.apiBaseUrl}/v1/ai-tutor`;ask(question:string,courseId:string){return this.h.post<{success:boolean;data:{answer:string}}>(`${this.b}/ask`,{question,courseId})}toggle(courseId:string,enabled:boolean){return this.h.patch(`${this.b}/${courseId}/toggle`,{enabled})}}

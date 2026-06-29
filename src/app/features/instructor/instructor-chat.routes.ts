@@ -6,6 +6,11 @@ import { ChatShellComponent } from '../chat/chat-shell/chat-shell.component';
 // Lazy-loaded feature routing mounted under /instructor/chat
 export const instructorChatRoutes: Routes = [
   {
+    path: '',
+    component: ChatShellComponent,
+    canActivate: [AuthChatGuard]
+  },
+  {
     path: ':courseId',
     component: ChatShellComponent,
     canActivate: [AuthChatGuard]
@@ -16,4 +21,5 @@ export const instructorChatRoutes: Routes = [
     canActivate: [AuthChatGuard]
   }
 ];
+
 

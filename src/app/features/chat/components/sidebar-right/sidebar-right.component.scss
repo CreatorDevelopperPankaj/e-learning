@@ -1,19 +1,5 @@
-.sidebar-right{
-  height: 100%;
-  padding: 12px;
-  border-left: 1px solid rgba(0,0,0,0.06);
-  overflow: auto;
-  background: var(--surface-ground, #fff);
-}
-
-.sidebar-right__header{
-  display:flex;
-  align-items:center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-
-.sidebar-right__title{font-weight: 600;}
-
-.muted{color: rgba(0,0,0,0.6); margin: 0;}
-
+*{box-sizing:border-box}.sidebar-right{height:100%;overflow:hidden auto;padding:96px 12px 12px;background:#f8f9fc;font-size:9px;margin-top:-84px}.panel{background:#fff;border:1px solid #e3e7ee;border-radius:9px;margin-bottom:10px;padding:12px;box-shadow:0 2px 6px #1c2d4c0b}.panel header{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.panel header>b{font-size:10px}.panel header button{border:0;background:transparent;color:#276be8;font-size:8px}.progress__body{display:flex;align-items:center;gap:9px}.ring{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#216af2 78%,#e7ebf1 0);position:relative}.ring:after{content:"";position:absolute;inset:6px;border-radius:50%;background:#fff}.ring span{z-index:1;font-size:14px;font-weight:700}.progress__body>div:nth-child(2){flex:1}.progress__body>div:nth-child(2) b,.progress__body>div:nth-child(2) small{display:block}.progress__body>div:nth-child(2) b{font-size:8px}.progress__body>div:nth-child(2) small{font-size:7px;margin-top:5px}.progress__body button{border:1px solid #65a0ff;background:#fff;color:#1767e5;border-radius:4px;font-size:7px;padding:6px}.face-row{display:flex;margin-bottom:12px}.face-row span,.face{width:25px;height:25px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#253a5b,#d6a078);border:2px solid #fff;color:#fff;font-size:7px;margin-right:3px}.face-row span:last-child{background:#e7edf5;color:#4c5b73}.member{height:30px;display:flex;align-items:center}.member .face{width:23px;height:23px;flex:0 0 23px;margin-right:8px}.member b{font-size:8px;flex:1}.member small{color:#6b7991;margin-right:9px}.member i{width:7px;height:7px;border-radius:50%}.member i.online{background:#16ad48}.member i.away{background:#f3b719}.member i.offline{background:#aab3c2}.pin{display:flex;align-items:center;gap:8px}.pin>span{width:39px;height:39px;border-radius:6px;background:#fff5e6;color:#ff7827;display:grid;place-items:center}.pin>span mat-icon{font-size:17px;width:17px;height:17px;transform:rotate(-35deg)}.pin div{flex:1}.pin div b,.pin div small{display:block;line-height:13px}.pin div small{color:#778398;font-size:7px;margin-top:3px}.pin>mat-icon{color:#1670e7;font-size:15px;width:15px;height:15px}.file{display:flex;align-items:center;gap:8px;height:36px}.file>span{width:23px;height:28px;border-radius:4px;background:#ee3151;color:#fff;display:grid;place-items:center;font-size:6px;font-weight:700}.file.zip>span{background:#f7b522}.file div{flex:1;min-width:0}.file b,.file small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.file b{font-size:8px}.file small{color:#7b879b;font-size:7px;margin-top:4px}.file>mat-icon{font-size:15px;width:15px;height:15px;color:#576985}.upcoming header{justify-content:flex-start;gap:7px}.upcoming header mat-icon{font-size:19px;color:#4266ed;width:19px;height:19px}.upcoming>div{position:relative}.upcoming>div b,.upcoming>div small{display:block}.upcoming>div b{font-size:8px}.upcoming>div small{color:#64738b;font-size:7px;margin-top:5px}.upcoming>div button{position:absolute;right:0;bottom:0;border:0;border-radius:5px;background:#4a4bec;color:#fff;font-size:7px;padding:8px 13px}@media(max-height:760px){.sidebar-right{padding-top:90px}.panel{padding:9px;margin-bottom:7px}.member{height:25px}.face-row{margin-bottom:7px}.file{height:30px}}
+/* Keep the resource cards below the shared top-bar row. */
+.sidebar-right{margin-top:0!important}
+a{color:inherit;display:grid;place-items:center}.pin+.pin{margin-top:8px}.panel>small{color:#7b879b}
+.member{width:100%;border:0;background:transparent;padding:0;cursor:pointer}.member:disabled{cursor:default;opacity:.75}

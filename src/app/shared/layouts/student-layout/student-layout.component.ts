@@ -63,6 +63,11 @@ export class StudentLayoutComponent implements OnInit {
         routerLink: '/student/messages'
       },
       {
+        label: 'Chat',
+        icon: 'pi pi-inbox',
+        routerLink: ['/student/chat']
+      },
+      {
         label: 'Settings',
         icon: 'pi pi-cog',
         routerLink: '/student/settings'

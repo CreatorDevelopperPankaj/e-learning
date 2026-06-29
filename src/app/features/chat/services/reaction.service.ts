@@ -1,9 +1,1 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ReactionService {
-  // Placeholder for reactions APIs.
-}
-
+import{inject,Injectable}from'@angular/core';import{ChatService}from'./chat.service';@Injectable({providedIn:'root'})export class ReactionService{private chat=inject(ChatService);toggle(id:string,emoji:string){return this.chat.react(id,emoji)}remove(id:string,emoji:string){return this.chat.removeReaction(id,emoji)}}

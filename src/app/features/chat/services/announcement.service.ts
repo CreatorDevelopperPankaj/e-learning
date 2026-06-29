@@ -1,9 +1,2 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AnnouncementService {
-  // Placeholder for announcement APIs.
-}
-
+import{HttpClient}from'@angular/common/http';import{inject,Injectable}from'@angular/core';import{environment}from'../../../../environments/environment';
+@Injectable({providedIn:'root'})export class AnnouncementService{private h=inject(HttpClient);private b=`${environment.apiBaseUrl}/v1`;create(c:string,p:any){return this.h.post(`${this.b}/channels/${c}/announcements`,p)}update(id:string,p:any){return this.h.patch(`${this.b}/announcements/${id}`,p)}delete(id:string){return this.h.delete(`${this.b}/announcements/${id}`)}}

@@ -1,22 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ChatMessage } from '../../models/chat-message.model';
 
-type PlaceholderMessage = { id: string; text: string };
-
-@Component({
-  selector: 'app-chat-messages',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, ScrollPanelModule],
-  templateUrl: './chat-messages.component.html',
-  styleUrls: ['./chat-messages.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
+@Component({ selector:'app-chat-messages', standalone:true, imports:[CommonModule,MatIconModule], templateUrl:'./chat-messages.component.html', styleUrls:['./chat-messages.component.scss'], changeDetection:ChangeDetectionStrategy.OnPush })
 export class ChatMessagesComponent {
-  readonly messages = signal<PlaceholderMessage[]>([
-    { id: '1', text: 'Welcome to EduLearn Chat (placeholder).' },
-    { id: '2', text: 'Messages will appear here after socket + REST integration.' }
-  ]);
+  @Input() messages: ChatMessage[] = [];
+  @Input() currentUserId = '';
+  @Input() loading = false;
+  @Output() readonly react = new EventEmitter<{message:ChatMessage;emoji:string}>();
+  @Output() readonly pin = new EventEmitter<ChatMessage>();
+  id(message:ChatMessage):string { return message._id || message.id || ''; }
+  initials(name:string):string { return (name || 'User').split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase(); }
 }
-

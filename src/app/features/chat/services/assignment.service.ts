@@ -1,9 +1,2 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AssignmentService {
-  // Placeholder for assignment APIs.
-}
-
+import {HttpClient} from '@angular/common/http';import{inject,Injectable}from'@angular/core';import{environment}from'../../../../environments/environment';import{Assignment}from'../models/assignment.model';
+@Injectable({providedIn:'root'})export class AssignmentService{private http=inject(HttpClient);private b=`${environment.apiBaseUrl}/v1`;list(c:string){return this.http.get<{success:boolean;data:Assignment[]}>(`${this.b}/channels/${c}/assignments`)}create(c:string,p:Partial<Assignment>){return this.http.post(`${this.b}/channels/${c}/assignments`,p)}submit(id:string,p:any){return this.http.post(`${this.b}/assignments/${id}/submit`,p)}submissions(id:string){return this.http.get(`${this.b}/assignments/${id}/submissions`)}}

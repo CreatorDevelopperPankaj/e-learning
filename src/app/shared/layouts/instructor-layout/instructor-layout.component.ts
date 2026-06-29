@@ -78,6 +78,11 @@ export class InstructorLayoutComponent implements OnInit {
         label: 'Analytics Reports',
         icon: 'pi pi-line-chart',
         routerLink: ['/instructor/analytics']
+      },
+      {
+        label: 'Chat',
+        icon: 'pi pi-inbox',
+        routerLink: ['/instructor/chat']
       }
     ];
   }

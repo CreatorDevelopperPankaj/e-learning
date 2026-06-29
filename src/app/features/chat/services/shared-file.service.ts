@@ -1,9 +1,1 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class SharedFileService {
-  // Placeholder for shared file APIs.
-}
-
+import{inject,Injectable}from'@angular/core';import{ChatService}from'./chat.service';@Injectable({providedIn:'root'})export class SharedFileService{private chat=inject(ChatService);list(channelId:string){return this.chat.files(channelId)}}

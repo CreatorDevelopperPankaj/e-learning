@@ -1,9 +1,2 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class LiveClassService {
-  // Placeholder for live class APIs.
-}
-
+import{HttpClient}from'@angular/common/http';import{inject,Injectable}from'@angular/core';import{environment}from'../../../../environments/environment';
+@Injectable({providedIn:'root'})export class LiveClassService{private h=inject(HttpClient);private b=`${environment.apiBaseUrl}/v1`;schedule(c:string,p:any){return this.h.post(`${this.b}/channels/${c}/live-classes`,p)}start(id:string){return this.h.patch(`${this.b}/live-classes/${id}/start`,{})}end(id:string){return this.h.patch(`${this.b}/live-classes/${id}/end`,{})}join(id:string){return this.h.post(`${this.b}/live-classes/${id}/join`,{})}attendance(id:string){return this.h.get(`${this.b}/live-classes/${id}/attendance`)}}

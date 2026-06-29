@@ -1,11 +1,14 @@
 <div class="sidebar-left">
-  <div class="sidebar-left__header">
-    <span class="sidebar-left__title">{{ placeholderTitle() }}</span>
-  </div>
-
-  <div class="sidebar-left__body">
-    <p class="muted">Left sidebar (placeholder). Channel list + course navigation will go here.</p>
-    <button pButton type="button" label="Placeholder" class="p-button-text"></button>
-  </div>
+  <header class="brand"><div class="brand__mark"><mat-icon>school</mat-icon></div><div><strong>EduLearn</strong><span>Smart Learning</span></div></header>
+  <section class="side-section courses">
+    <div class="section-title"><b>Courses</b><button *ngIf="canAddCourse" aria-label="Add course" title="Add course" (click)="addCourse.emit()">+</button></div>
+    <button *ngFor="let course of apiCourses;let i=index" class="course" [class.active]="courseKey(course)===courseId" (click)="courseSelected.emit(course)"><span class="course__icon" [style.background]="i%2 ? '#11bde7' : '#e9294f'">{{courseInitial(course)}}</span><span class="course__info"><b>{{course.title}}</b><small>{{course.category||course.level||'Course'}}</small></span></button>
+    <p class="muted" *ngIf="!apiCourses.length">No enrolled courses found.</p>
+  </section>
+  <section class="side-section channels">
+    <div class="section-title"><b>Channels</b></div>
+    <button *ngFor="let channel of apiChannels" class="channel" [class.active]="channelKey(channel) === channelId" (click)="channelSelected.emit(channel)"><mat-icon>{{ channel.icon || 'chat_bubble_outline' }}</mat-icon><span>{{ channel.name }}</span><small *ngIf="channel.type==='direct'">Direct</small></button>
+    <p class="muted" *ngIf="courseId && !apiChannels.length">Loading channels…</p>
+  </section>
+  <div class="upgrade"><div class="upgrade__title"><mat-icon>workspace_premium</mat-icon><div><b>Upgrade to Pro</b><small>Get unlimited access<br>to all features</small></div></div><button>Upgrade Now</button></div>
 </div>
-

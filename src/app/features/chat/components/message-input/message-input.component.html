@@ -1,15 +1,6 @@
-<div class="message-input">
-  <div class="message-input__row">
-    <input
-      pInputText
-      type="text"
-      placeholder="Type a message... (placeholder)"
-      [value]="draft()"
-      (input)="draft.set($any($event.target).value)"
-      class="message-input__field"
-    />
-
-    <button pButton type="button" label="Send" icon="pi pi-send" (click)="onSend()"></button>
-  </div>
+<div class="composer">
+  <button class="tool" aria-label="Emoji"><mat-icon>sentiment_satisfied_alt</mat-icon></button>
+  <input type="text" placeholder="Type a message..." [value]="draft()" (input)="draft.set($any($event.target).value)" (keydown.enter)="onSend()"><input #fileInput class="file-picker" type="file" (change)="onFile($event)">
+  <div class="tools"><button aria-label="Attach" (click)="fileInput.click()"><mat-icon>attach_file</mat-icon></button><button aria-label="File"><mat-icon>description</mat-icon></button><button aria-label="Image"><mat-icon>image</mat-icon></button><button aria-label="Video"><mat-icon>videocam</mat-icon></button><button aria-label="Microphone"><mat-icon>mic_none</mat-icon></button></div>
+  <button class="tutor" (click)="onAskTutor()"><mat-icon>smart_toy</mat-icon> AI Tutor</button><button class="send" (click)="onSend()" aria-label="Send"><mat-icon>send</mat-icon></button>
 </div>
-

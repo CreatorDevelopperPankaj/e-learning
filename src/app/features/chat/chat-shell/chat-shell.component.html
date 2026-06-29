@@ -1,21 +1,21 @@
-<div class="chat-shell" [class.chat-shell--mobile]="isMobile()">
+<div class="chat-shell">
   <div class="chat-shell__grid">
     <aside class="chat-shell__left" aria-label="Chat sidebar left">
-      <app-chat-sidebar-left></app-chat-sidebar-left>
+      <app-chat-sidebar-left [courseId]="courseId()" [channelId]="channelId()" [apiCourses]="courses()" [apiChannels]="channels()" [canAddCourse]="canAddCourse" (addCourse)="addCourse()" (courseSelected)="selectCourse($event)" (channelSelected)="selectChannel($event)"></app-chat-sidebar-left>
     </aside>
 
     <main class="chat-shell__center" aria-label="Chat main area">
-      <app-chat-header></app-chat-header>
+      <app-chat-header [title]="channelTitle()" (searchMessages)="search($event)"></app-chat-header>
 
       <section class="chat-shell__messages">
-        <app-chat-messages></app-chat-messages>
+        <div class="chat-error" *ngIf="error()">{{ error() }}</div><app-chat-messages [messages]="messages()" [currentUserId]="currentUserId" [loading]="loading()" (react)="react($event)" (pin)="pin($event)"></app-chat-messages>
       </section>
 
-      <app-message-input></app-message-input>
+      <app-message-input (sendMessage)="send($event)" (fileSelected)="upload($event)" (askTutor)="askTutor($event)"></app-message-input>
     </main>
 
     <aside class="chat-shell__right" aria-label="Chat sidebar right">
-      <app-chat-sidebar-right></app-chat-sidebar-right>
+      <app-chat-sidebar-right [members]="members()" [currentUserId]="currentUserId" [progressValue]="progress()" [pinnedMessages]="pinned()" [sharedFiles]="files()" (memberSelected)="startDirect($event)"></app-chat-sidebar-right>
     </aside>
   </div>
 </div>

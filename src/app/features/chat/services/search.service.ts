@@ -1,9 +1,1 @@
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class SearchService {
-  // Placeholder for search APIs.
-}
-
+import{inject,Injectable}from'@angular/core';import{ChatService}from'./chat.service';@Injectable({providedIn:'root'})export class SearchService{private chat=inject(ChatService);search(channelId:string,q:string){return this.chat.search(channelId,q)}}

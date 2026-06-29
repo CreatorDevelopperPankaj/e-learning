@@ -1,10 +1,13 @@
 export interface FileAttachment {
-  id: string;
+  id?: string;
+  fileId?: string;
   messageId?: string;
-  fileName: string;
+  fileName?: string;
+  name?: string;
   mimeType: string;
   url: string;
   sizeBytes?: number;
-  uploadedAt: string;
+  uploadedAt?: string;
+  size?: number;
 }
 
