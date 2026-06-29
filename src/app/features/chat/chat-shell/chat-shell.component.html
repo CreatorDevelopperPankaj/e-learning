@@ -5,7 +5,13 @@
     </aside>
 
     <main class="chat-shell__center" aria-label="Chat main area">
-      <app-chat-header [title]="channelTitle()" (searchMessages)="search($event)"></app-chat-header>
+      <app-chat-header
+        [title]="channelTitle()"
+        [studentsCount]="studentsCount()"
+        [instructorsCount]="instructorsCount()"
+        (searchMessages)="search($event)"
+      ></app-chat-header>
+
 
       <section class="chat-shell__messages">
         <div class="chat-error" *ngIf="error()">{{ error() }}</div><app-chat-messages [messages]="messages()" [currentUserId]="currentUserId" [loading]="loading()" (react)="react($event)" (pin)="pin($event)"></app-chat-messages>
