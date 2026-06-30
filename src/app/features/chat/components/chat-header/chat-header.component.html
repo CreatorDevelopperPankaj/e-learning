@@ -1,13 +1,56 @@
 <header class="chat-header">
   <div class="course-head">
-    <button class="icon-btn back" aria-label="Back">
-      <mat-icon>arrow_back</mat-icon>
-    </button><div class="angular-logo">A</div>
-    <div class="course-copy"><div><strong>{{title}}</strong>
-      <mat-icon>keyboard_arrow_down</mat-icon></div>
-      <span>
-        Students: {{ studentsCount }}&nbsp;&nbsp;•&nbsp;&nbsp;Instructors: {{ instructorsCount }}
-      </span></div><span class="live"><i></i>Live Now</span></div>
+    <div class="course-icon">
+      <mat-icon>campaign</mat-icon>
+      <i class="dot"></i>
+    </div>
+    <div class="course-copy">
+      <div class="title-row">
+        <strong>{{ title }}</strong>
+        <mat-icon class="chevron">keyboard_arrow_down</mat-icon>
+      </div>
+      <span class="meta">
+        Students: <b>{{ studentsCount }}</b>
+        <i class="sep">•</i>
+        Instructors: <b>{{ instructorsCount }}</b>
+      </span>
+    </div>
+  </div>
 
-  <div class="actions"><label class="search"><mat-icon>search</mat-icon><input #query type="search" placeholder="Search messages, files..." (keydown.enter)="searchMessages.emit(query.value)"><kbd>Ctrl + K</kbd></label><button class="icon-btn" aria-label="Audio call"><mat-icon>call</mat-icon></button><button class="icon-btn" aria-label="Video call"><mat-icon>videocam</mat-icon></button><button class="icon-btn" aria-label="Pinned messages"><mat-icon>push_pin</mat-icon></button><button class="icon-btn notify" aria-label="Notifications"><mat-icon>notifications_none</mat-icon><b>8</b></button><div class="profile"><span>JS<i></i></span><div><b>John Smith</b><small>Instructor</small></div><button class="icon-btn"><mat-icon>more_vert</mat-icon></button></div></div>
+  <label class="search">
+    <mat-icon>search</mat-icon>
+    <input #query type="search" placeholder="Search messages..." (keydown.enter)="searchMessages.emit(query.value)" />
+    <kbd>Ctrl + K</kbd>
+  </label>
+
+  <div class="quick-actions">
+    <button class="icon-btn" aria-label="Audio call">
+      <mat-icon>call</mat-icon>
+    </button>
+    <button class="icon-btn" aria-label="Video call">
+      <mat-icon>videocam</mat-icon>
+    </button>
+    <button class="icon-btn" aria-label="Pinned messages">
+      <mat-icon>push_pin</mat-icon>
+    </button>
+    <button class="icon-btn notify" aria-label="Notifications">
+      <mat-icon>notifications_none</mat-icon>
+      <b *ngIf="notificationCount > 0">{{ notificationCount }}</b>
+    </button>
+  </div>
+
+  <div class="profile">
+    <span class="avatar">
+      {{ initials }}
+      <i class="status"></i>
+    </span>
+    <div class="profile-info">
+      <b>{{ userName }}</b>
+      <small>{{ userRole }}</small>
+    </div>
+    <button class="icon-btn" type="button" (click)="menu.toggle($event)">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <p-menu #menu [popup]="true" [model]="menuItems" appendTo="body" styleClass="chat-more-menu"></p-menu>
+  </div>
 </header>

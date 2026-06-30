@@ -1,1 +1,150 @@
-<h2>Instructor Dashboard works</h2>
+<div class="dashboard-wrapper">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-title-block">
+      <h1 class="page-title">Instructor Dashboard</h1>
+      <p class="page-subtitle">Welcome back, Pankaj! Here's what's happening with your courses today.</p>
+    </div>
+    <button class="date-btn">
+      <i class="pi pi-calendar"></i>
+      <span>{{ selectedDate }}</span>
+      <i class="pi pi-chevron-down"></i>
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="stat-cards-grid">
+    <div class="stat-card" *ngFor="let card of statCards">
+      <div class="stat-icon-wrap" [style.background]="card.iconBg">
+        <i [class]="card.icon" [style.color]="card.iconColor"></i>
+      </div>
+      <div class="stat-info">
+        <span class="stat-label">{{ card.label }}</span>
+        <span class="stat-value">{{ card.value }}</span>
+        <span class="stat-change" [class.positive]="card.positive">
+          <i class="pi pi-arrow-up"></i> {{ card.change }}
+          <span class="stat-vs">vs last month</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Middle Row: Chart + Top Courses -->
+  <div class="middle-row">
+
+    <!-- Earnings Overview -->
+    <div class="card chart-card">
+      <div class="card-header">
+        <span class="card-title">Earnings Overview</span>
+        <button class="period-btn">Last 6 Months <i class="pi pi-chevron-down"></i></button>
+      </div>
+      <div class="chart-area">
+        <p-chart type="line" [data]="earningsChartData" [options]="earningsChartOptions" height="220px" />
+      </div>
+    </div>
+
+    <!-- Top Courses -->
+    <div class="card top-courses-card">
+      <div class="card-header">
+        <span class="card-title">Top Courses</span>
+        <a class="view-all-link">View All</a>
+      </div>
+      <table class="courses-table">
+        <thead>
+          <tr>
+            <th>Course</th>
+            <th>Students</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let course of topCourses">
+            <td>
+              <div class="course-name-cell">
+                <span class="course-badge" [style.background]="course.bg" [style.color]="course.color">
+                  {{ course.abbr }}
+                </span>
+                <span class="course-name">{{ course.name }}</span>
+              </div>
+            </td>
+            <td class="table-num">{{ course.students }}</td>
+            <td class="table-num revenue">{{ course.revenue }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Bottom Row -->
+  <div class="bottom-row">
+
+    <!-- Recent Enrollments -->
+    <div class="card enrollments-card">
+      <div class="card-header">
+        <span class="card-title">Recent Enrollments</span>
+        <a class="view-all-link">View All</a>
+      </div>
+      <div class="enrollment-list">
+        <div class="enrollment-item" *ngFor="let item of recentEnrollments">
+          <p-avatar [label]="item.initials" shape="circle" size="normal"
+            [style]="{ background: item.bg, color: '#374151', fontWeight: '600', fontSize: '12px' }" />
+          <div class="enrollment-info">
+            <span class="enrollment-name">{{ item.name }}</span>
+            <a class="enrollment-course" [style.color]="item.courseColor">{{ item.course }}</a>
+          </div>
+          <span class="enrollment-time">{{ item.time }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Student Activity -->
+    <div class="card activity-card">
+      <div class="card-header">
+        <span class="card-title">Student Activity</span>
+      </div>
+      <div class="activity-body">
+        <div class="donut-wrap">
+          <p-chart type="doughnut" [data]="activityChartData" [options]="activityChartOptions" height="180px" />
+        </div>
+        <div class="activity-legend">
+          <div class="legend-item" *ngFor="let leg of activityLegend">
+            <span class="legend-dot" [style.background]="leg.color"></span>
+            <div class="legend-text">
+              <span class="legend-label">{{ leg.label }}</span>
+              <span class="legend-value">{{ leg.value }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Reviews -->
+    <div class="card reviews-card">
+      <div class="card-header">
+        <span class="card-title">Recent Reviews</span>
+        <a class="view-all-link">View All</a>
+      </div>
+      <div class="reviews-list">
+        <div class="review-item" *ngFor="let review of recentReviews">
+          <div class="review-top">
+            <p-avatar [label]="review.initials" shape="circle" size="normal"
+              [style]="{ background: review.bg, color: '#374151', fontWeight: '600', fontSize: '12px' }" />
+            <div class="review-meta">
+              <span class="reviewer-name">{{ review.name }}</span>
+              <div class="stars-row">
+                <i class="pi pi-star-fill star" *ngFor="let s of getStars(review.rating)"></i>
+                <i class="pi pi-star-half star" *ngIf="hasHalfStar(review.rating)"></i>
+                <span class="rating-num">{{ review.rating }}</span>
+              </div>
+            </div>
+            <span class="review-time">{{ review.time }}</span>
+          </div>
+          <p class="review-comment">{{ review.comment }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

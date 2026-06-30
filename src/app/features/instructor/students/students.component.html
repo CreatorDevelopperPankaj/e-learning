@@ -1,0 +1,359 @@
+<div class="sw-wrapper">
+
+    <!-- Header -->
+    <div class="sw-header">
+
+        <div class="sw-header-left">
+            <h2>Instructor Students Works</h2>
+            <p>Review and evaluate your students' submissions and progress.</p>
+        </div>
+
+        <button class="upload-btn">
+            <i class="pi pi-upload"></i>
+            Upload Assignment
+        </button>
+
+    </div>
+
+    <!-- Statistics -->
+    <div class="sw-stat-grid">
+
+        <div class="sw-stat-card" *ngFor="let card of statCards">
+
+            <div class="sw-icon" [style.background]="card.bg">
+
+                <i [class]="card.icon" [style.color]="card.color">
+                </i>
+
+            </div>
+
+            <div class="sw-info">
+
+                <span class="label">
+                    {{card.title}}
+                </span>
+
+                <span class="value">
+                    {{card.value}}
+                </span>
+
+                <small>
+                    {{card.subtitle}}
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Table Card -->
+
+    <div class="sw-card">
+
+        <!-- Toolbar -->
+
+        <div class="sw-toolbar">
+
+            <div class="tabs">
+
+                <button *ngFor="let tab of tabs" class="tab-btn" [class.active]="activeTab()===tab.key"
+                    (click)="selectTab(tab.key)">
+
+                    {{tab.label}}
+
+                </button>
+
+            </div>
+
+            <div class="toolbar-right">
+
+                <div class="search-box">
+
+                    <i class="pi pi-search"></i>
+
+                    <input type="text" placeholder="Search by student or assignment..." [ngModel]="search()"
+                        (ngModelChange)="search.set($event)" />
+
+                </div>
+
+                <button class="filter-btn">
+
+                    All Courses
+
+                    <i class="pi pi-chevron-down"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Table -->
+
+        <table class="students-table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Student</th>
+
+                    <th>Assignment</th>
+
+                    <th>Course</th>
+
+                    <th>Submitted On</th>
+
+                    <th>Status</th>
+
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr *ngFor="let item of pagedWorks()">
+
+                    <!-- Student -->
+
+                    <td>
+
+                        <div class="student-cell">
+
+                            <div class="avatar">
+
+                                {{item.avatar}}
+
+                            </div>
+
+                            <div>
+
+                                <div class="name">
+
+                                    {{item.name}}
+
+                                </div>
+
+                                <div class="email">
+
+                                    {{item.email}}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <!-- Assignment -->
+
+                    <td>
+
+                        <div class="assignment">
+
+                            <div class="title">
+
+                                {{item.assignment}}
+
+                            </div>
+
+                            <div class="file">
+
+                                <i class="pi pi-file"></i>
+
+                                {{item.fileInfo}}
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+                    <!-- Course -->
+
+                    <td>
+
+                        <span class="course-chip" [ngClass]="item.courseType">
+
+                            {{item.course}}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Submitted -->
+
+                    <td>
+
+                        <div class="submitted">
+
+                            <div>
+
+                                {{item.submittedOn}}
+
+                            </div>
+
+                            <small>
+
+                                {{item.submittedTime}}
+
+                            </small>
+
+                        </div>
+
+                    </td>
+
+                    <!-- Status -->
+
+                    <td>
+
+                        <span class="status" [ngClass]="item.status.toLowerCase()">
+
+                            {{item.status}}
+
+                        </span>
+
+                    </td>
+
+                    <!-- Actions -->
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button class="icon-btn" pTooltip="View">
+
+                                <i class="pi pi-eye"></i>
+
+                            </button>
+
+                            <button class="icon-btn" pTooltip="Comment">
+
+                                <i class="pi pi-comments"></i>
+
+                                <span class="badge" *ngIf="item.comments">
+
+                                    {{item.comments}}
+
+                                </span>
+
+                            </button>
+
+                            <button class="icon-btn" pTooltip="More">
+
+                                <i class="pi pi-ellipsis-v"></i>
+
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                <tr *ngIf="pagedWorks().length===0">
+
+                    <td colspan="6" class="empty">
+
+                        <i class="pi pi-search"></i>
+
+                        No student work found.
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+        <!-- Footer -->
+
+        <div class="sw-footer">
+
+            <span>
+
+                Showing
+
+                {{pagedWorks().length}}
+
+                of
+
+                {{filteredWorks().length}}
+
+                works
+
+            </span>
+
+            <div class="pagination">
+
+                <button class="page-btn" (click)="prev()">
+
+                    <i class="pi pi-angle-left"></i>
+
+                </button>
+
+                <button *ngFor="let p of pageNumbers()" class="page-btn" [class.active]="p===currentPage()"
+                    (click)="currentPage.set(p)">
+
+                    {{p}}
+
+                </button>
+
+                <button class="page-btn" (click)="next()">
+
+                    <i class="pi pi-angle-right"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bottom Help Card -->
+
+    <div class="help-card">
+
+        <div class="left">
+
+            <div class="help-icon">
+
+                <i class="pi pi-file-edit"></i>
+
+            </div>
+
+            <div>
+
+                <h4>
+
+                    Need help reviewing submissions?
+
+                </h4>
+
+                <p>
+
+                    Use grading rubrics and feedback templates to streamline your evaluation process.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <button class="feedback-btn">
+
+            View Feedback Templates
+
+        </button>
+
+    </div>
+
+</div>

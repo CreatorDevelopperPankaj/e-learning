@@ -1,0 +1,154 @@
+<div class="cb-wrapper">
+
+  <!-- Page Header -->
+  <div class="cb-header">
+    <div class="cb-header-left">
+      <h1 class="cb-title">Course Builder</h1>
+      <p class="cb-subtitle">Create, manage and organize your courses with ease.</p>
+    </div>
+    <button class="create-btn">
+      <i class="pi pi-plus"></i>
+      Create New Course
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="cb-stat-grid">
+    <div class="cb-stat-card" *ngFor="let card of statCards">
+      <div class="cb-stat-icon" [style.background]="card.iconBg">
+        <i [class]="card.icon" [style.color]="card.iconColor"></i>
+      </div>
+      <div class="cb-stat-info">
+        <span class="cb-stat-label">{{ card.label }}</span>
+        <span class="cb-stat-value">{{ card.value }}</span>
+        <span class="cb-stat-sub">{{ card.sub }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="cb-table-card">
+
+    <!-- Table Toolbar -->
+    <div class="cb-toolbar">
+      <span class="cb-table-title">All Courses</span>
+      <div class="cb-toolbar-right">
+        <!-- Search -->
+        <div class="cb-search-wrap">
+          <i class="pi pi-search cb-search-icon"></i>
+          <input
+            class="cb-search-input"
+            type="text"
+            placeholder="Search courses..."
+            [value]="searchQuery()"
+            (input)="onSearch($any($event.target).value)"
+          />
+        </div>
+        <!-- Filter -->
+        <button class="cb-filter-btn">
+          <i class="pi pi-filter"></i> Filter
+        </button>
+        <!-- Sort -->
+        <button class="cb-sort-btn">
+          {{ sortOrder() }} <i class="pi pi-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table class="cb-table">
+      <thead>
+        <tr>
+          <th class="col-course">Course</th>
+          <th class="col-category">Category</th>
+          <th class="col-students">Students</th>
+          <th class="col-status">Status</th>
+          <th class="col-updated">Updated</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of pagedCourses()">
+
+          <!-- Course -->
+          <td class="col-course">
+            <div class="course-cell">
+              <div class="course-thumb" [style.background]="course.abbrBg">
+                <span [style.color]="course.abbrColor">{{ course.abbr }}</span>
+              </div>
+              <div class="course-meta">
+                <span class="course-name">{{ course.name }}</span>
+                <span class="course-desc">{{ course.description }}</span>
+              </div>
+            </div>
+          </td>
+
+          <!-- Category -->
+          <td class="col-category">
+            <span class="category-badge" [class]="'cat-' + course.categoryType">
+              {{ course.category }}
+            </span>
+          </td>
+
+          <!-- Students -->
+          <td class="col-students">{{ course.students }}</td>
+
+          <!-- Status -->
+          <td class="col-status">
+            <span class="status-badge" [class]="'status-' + course.status.toLowerCase()">
+              <span class="status-dot"></span>
+              {{ course.status }}
+            </span>
+          </td>
+
+          <!-- Updated -->
+          <td class="col-updated">{{ course.updated }}</td>
+
+          <!-- Actions -->
+          <td class="col-actions">
+            <div class="actions-wrap">
+              <button class="action-btn" pTooltip="View" tooltipPosition="top">
+                <i class="pi pi-eye"></i>
+              </button>
+              <button class="action-btn" pTooltip="Edit" tooltipPosition="top">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button class="action-btn" pTooltip="More" tooltipPosition="top">
+                <i class="pi pi-ellipsis-v"></i>
+              </button>
+            </div>
+          </td>
+
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="pagedCourses().length === 0">
+          <td colspan="6" class="empty-row">
+            <i class="pi pi-search"></i>
+            <span>No courses found for "{{ searchQuery() }}"</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer: count + pagination -->
+    <div class="cb-footer">
+      <span class="showing-text">{{ totalShowing() }}</span>
+      <div class="pagination">
+        <button class="page-nav" [disabled]="currentPage() === 1" (click)="prevPage()">
+          <i class="pi pi-angle-left"></i>
+        </button>
+        <button
+          class="page-btn"
+          *ngFor="let p of pageNumbers()"
+          [class.active]="p === currentPage()"
+          (click)="goToPage(p)"
+        >{{ p }}</button>
+        <button class="page-nav" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+          <i class="pi pi-angle-right"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

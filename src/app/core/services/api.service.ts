@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ApiCourse {
   _id?: string;
@@ -22,8 +23,6 @@ export interface ApiCourse {
 })
 export class ApiService {
   // Update this base URL if your backend runs on different host/port.
-  private readonly baseUrl = 'http://localhost:3000/api';
-
   constructor(private readonly http: HttpClient) {}
 
   // Popular endpoints remove kar diye hain (backend me /api/courses/popular nahi hai)

@@ -1,0 +1,398 @@
+<p-dialog [(visible)]="visible" [modal]="true" [closable]="false" [draggable]="false" [resizable]="false"
+    styleClass="create-course-modal" [style]="{ width: '880px', maxWidth: '95vw' }" (onHide)="close()">
+
+    <!-- Custom Header -->
+    <ng-template pTemplate="header">
+        <div class="cc-header">
+            <div class="cc-header-text">
+                <h2 class="cc-title">Create New Course</h2>
+                <p class="cc-subtitle">Fill in the details to publish a new course.</p>
+            </div>
+            <button class="cc-close-btn" (click)="close()">
+                <i class="pi pi-times"></i>
+            </button>
+        </div>
+    </ng-template>
+
+    <!-- Step Tracker -->
+    <div class="cc-steps">
+        <div class="cc-step" *ngFor="let step of steps; let i = index" [class.active]="activeStepIndex() === i"
+            [class.completed]="activeStepIndex() > i" [class.valid]="isStepValid(step.key)" (click)="goToStep(i)">
+            <div class="cc-step-circle">
+                <i class="pi pi-check" *ngIf="activeStepIndex() > i"></i>
+                <span *ngIf="activeStepIndex() <= i">{{ i + 1 }}</span>
+            </div>
+            <span class="cc-step-label">{{ step.label }}</span>
+            <div class="cc-step-line" *ngIf="i < steps.length - 1"></div>
+        </div>
+    </div>
+
+    <!-- Body -->
+    <div class="cc-body" [formGroup]="form">
+
+        <!-- STEP 1: Basics -->
+        <div class="cc-panel" *ngIf="activeStep() === 'basics'" formGroupName="basics">
+
+            <div class="cc-field">
+                <label class="cc-label">Course Title <span class="req">*</span></label>
+                <input type="text" pInputText class="cc-input" formControlName="title"
+                    placeholder="e.g. Complete JavaScript Mastery" />
+            </div>
+
+            <div class="cc-row">
+                <div class="cc-field">
+                    <label class="cc-label">Category <span class="req">*</span></label>
+                    <p-select [options]="categoryOptions" formControlName="category" placeholder="Select category"
+                        class="cc-dropdown" [style]="{ width: '100%' }" />
+                </div>
+                <div class="cc-field">
+                    <label class="cc-label">Level <span class="req">*</span></label>
+                    <p-select [options]="levelOptions" formControlName="level" placeholder="Select level"
+                        class="cc-dropdown" [style]="{ width: '100%' }" />
+                </div>
+                <div class="cc-field">
+                    <label class="cc-label">Language</label>
+                    <p-select [options]="languageOptions" formControlName="language" class="cc-dropdown"
+                        [style]="{ width: '100%' }" />
+                </div>
+            </div>
+
+            <div class="cc-field">
+                <label class="cc-label">
+                    Short Description <span class="req">*</span>
+                    <span class="char-count">{{ form.get('basics.shortDescription')?.value?.length || 0 }}/150</span>
+                </label>
+                <input type="text" pInputText class="cc-input" formControlName="shortDescription" maxlength="150"
+                    placeholder="A one-line summary shown on course cards" />
+            </div>
+
+            <div class="cc-field">
+                <label class="cc-label">Full Description <span class="req">*</span></label>
+                <textarea pInputTextarea class="cc-textarea" formControlName="fullDescription" rows="5"
+                    placeholder="Describe what the course covers in detail..."></textarea>
+            </div>
+
+            <div class="cc-field">
+                <label class="cc-label">Course Thumbnail</label>
+                <div class="cc-thumbnail-upload" *ngIf="!thumbnailPreview()">
+                    <input type="file" accept="image/*" id="thumbInput" (change)="onThumbnailSelected($event)" hidden />
+                    <label for="thumbInput" class="cc-upload-zone">
+                        <i class="pi pi-cloud-upload"></i>
+                        <span class="upload-text">Click to upload thumbnail</span>
+                        <span class="upload-sub">PNG, JPG up to 5MB · Recommended 1280x720</span>
+                    </label>
+                </div>
+                <div class="cc-thumbnail-preview" *ngIf="thumbnailPreview()">
+                    <img [src]="thumbnailPreview()" alt="Course thumbnail" />
+                    <button class="remove-thumb-btn" (click)="removeThumbnail()">
+                        <i class="pi pi-trash"></i> Remove
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STEP 2: Curriculum -->
+        <div class="cc-panel" *ngIf="activeStep() === 'curriculum'" formGroupName="curriculum">
+
+            <div class="curriculum-summary">
+                <span><i class="pi pi-folder"></i> {{ sectionsArray.length }} Sections</span>
+                <span><i class="pi pi-book"></i> {{ totalLessons() }} Lessons</span>
+                <span [class.summary-warning]="videosUploadedCount() < totalLessons()">
+                    <i class="pi pi-video"></i> {{ videosUploadedCount() }}/{{ totalLessons() }} Videos
+                </span>
+            </div>
+
+            <div formArrayName="sections" class="sections-list">
+                <div class="section-block" *ngFor="let section of sectionsArray.controls; let si = index"
+                    [formGroupName]="si">
+
+                    <div class="section-header">
+                        <i class="pi pi-bars drag-handle"></i>
+                        <input type="text" pInputText class="section-name-input" formControlName="name"
+                            placeholder="Section name" />
+                        <button class="icon-btn danger" (click)="removeSection(si)"
+                            [disabled]="sectionsArray.length === 1" pTooltip="Remove section">
+                            <i class="pi pi-trash"></i>
+                        </button>
+                    </div>
+
+                    <div formArrayName="lessons" class="lessons-list">
+                        <div class="lesson-card" *ngFor="let lesson of lessonsArray(si).controls; let li = index"
+                            [formGroupName]="li">
+
+                            <!-- Top row: title, duration, remove -->
+                            <div class="lesson-row">
+                                <i class="pi pi-play-circle lesson-icon"></i>
+                                <input type="text" pInputText class="lesson-title-input" formControlName="title"
+                                    [placeholder]="'Lesson ' + (li + 1) + ' title'" />
+                                <div class="lesson-duration">
+                                    <input type="text" pInputText class="duration-input" formControlName="duration"
+                                        placeholder="10" />
+                                    <span class="duration-unit">min</span>
+                                </div>
+                                <button class="icon-btn danger small" (click)="removeLesson(si, li)"
+                                    [disabled]="lessonsArray(si).length === 1">
+                                    <i class="pi pi-times"></i>
+                                </button>
+                            </div>
+
+                            <!-- Video upload zone -->
+                            <div class="lesson-video-zone">
+
+                                <!-- No video yet, no upload in progress -->
+                                <ng-container
+                                    *ngIf="!lesson.get('videoUrl')?.value && !getUploadState(si, li)?.uploading">
+                                    <input type="file" accept="video/*" [id]="'video-' + si + '-' + li"
+                                        (change)="onVideoSelected($event, si, li)" hidden />
+                                    <label [for]="'video-' + si + '-' + li" class="video-upload-btn">
+                                        <i class="pi pi-video"></i>
+                                        <span>Upload lesson video</span>
+                                    </label>
+                                    <span class="video-error" *ngIf="getUploadState(si, li)?.error">
+                                        <i class="pi pi-exclamation-circle"></i> {{ getUploadState(si, li)?.error }}
+                                    </span>
+                                </ng-container>
+
+                                <!-- Upload in progress -->
+                                <div class="video-upload-progress" *ngIf="getUploadState(si, li)?.uploading">
+                                    <div class="vup-info">
+                                        <i class="pi pi-spin pi-spinner"></i>
+                                        <span>Uploading video…</span>
+                                        <!-- Line 187 in add-courses.component.html -->
+                                        <div class="progress-bar-fill"
+                                            [style.width.%]="(getUploadState(si, li)?.progress) ?? 0">
+                                            <span class="vup-percent">
+                                                {{ (getUploadState(si, li)?.progress ?? 0) | number:'1.0-0' }}%
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                    <div class="vup-bar-track">
+                                        <div class="vup-bar-fill" [style.width.%]="getUploadState(si, li)?.progress">
+                                        </div>
+                                    </div>
+                                    <button class="vup-cancel-btn" (click)="cancelUpload(si, li)">Cancel</button>
+                                </div>
+
+                                <!-- Video uploaded successfully -->
+                                <div class="video-uploaded-card" *ngIf="lesson.get('videoUrl')?.value">
+                                    <video [src]="lesson.get('videoUrl')?.value" class="video-thumb-preview"
+                                        muted></video>
+                                    <div class="video-uploaded-info">
+                                        <span class="video-file-name"><i class="pi pi-check-circle"></i> {{
+                                            lesson.get('videoName')?.value }}</span>
+                                        <span class="video-file-size">{{ lesson.get('videoSize')?.value }}</span>
+                                    </div>
+                                    <button class="video-replace-btn" (click)="removeVideo(si, li)">
+                                        <i class="pi pi-refresh"></i> Replace
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button class="add-lesson-btn" (click)="addLesson(si)">
+                        <i class="pi pi-plus"></i> Add Lesson
+                    </button>
+
+                </div>
+            </div>
+
+            <button class="add-section-btn" (click)="addSection()">
+                <i class="pi pi-plus"></i> Add Section
+            </button>
+
+        </div>
+
+        <!-- STEP 3: Requirements & Outcomes -->
+        <div class="cc-panel" *ngIf="activeStep() === 'requirements'" formGroupName="requirements">
+
+            <div class="cc-field">
+                <label class="cc-label">What students will learn <span class="req">*</span></label>
+                <p class="cc-hint">Add the key takeaways students will gain from this course.</p>
+                <div formArrayName="outcomes" class="dynamic-list">
+                    <div class="dynamic-row" *ngFor="let outcome of outcomesArray.controls; let i = index">
+                        <i class="pi pi-check-circle list-icon success"></i>
+                        <input type="text" pInputText class="cc-input" [formControlName]="i"
+                            placeholder="e.g. Build full-stack applications with Angular" />
+                        <button class="icon-btn danger small" (click)="removeOutcome(i)"
+                            [disabled]="outcomesArray.length === 1">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="add-row-btn" (click)="addOutcome()">
+                    <i class="pi pi-plus"></i> Add Outcome
+                </button>
+            </div>
+
+            <div class="cc-field" style="margin-top: 28px;">
+                <label class="cc-label">Requirements / Prerequisites <span class="req">*</span></label>
+                <p class="cc-hint">List what students need to know or have before starting.</p>
+                <div formArrayName="requirements" class="dynamic-list">
+                    <div class="dynamic-row" *ngFor="let req of requirementsArray.controls; let i = index">
+                        <i class="pi pi-circle-fill list-icon muted"></i>
+                        <input type="text" pInputText class="cc-input" [formControlName]="i"
+                            placeholder="e.g. Basic understanding of HTML & CSS" />
+                        <button class="icon-btn danger small" (click)="removeRequirement(i)"
+                            [disabled]="requirementsArray.length === 1">
+                            <i class="pi pi-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="add-row-btn" (click)="addRequirement()">
+                    <i class="pi pi-plus"></i> Add Requirement
+                </button>
+            </div>
+
+        </div>
+
+        <!-- STEP 4: Pricing -->
+        <div class="cc-panel" *ngIf="activeStep() === 'pricing'" formGroupName="pricing">
+
+            <div class="cc-field">
+                <label class="cc-label">Pricing Tier <span class="req">*</span></label>
+                <div class="pricing-tier-grid">
+                    <label class="tier-card" *ngFor="let tier of pricingTierOptions"
+                        [class.selected]="form.get('pricing.tier')?.value === tier.value">
+                        <input type="radio" formControlName="tier" [value]="tier.value" hidden />
+                        <i class="pi" [ngClass]="{
+              'pi-gift': tier.value === 'Free',
+              'pi-credit-card': tier.value === 'One-time',
+              'pi-refresh': tier.value === 'Subscription'
+            }"></i>
+                        <span class="tier-name">{{ tier.label }}</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="cc-row" *ngIf="form.get('pricing.tier')?.value !== 'Free'">
+                <div class="cc-field">
+                    <label class="cc-label">Price (USD) <span class="req">*</span></label>
+                    <p-inputNumber formControlName="price" mode="currency" currency="USD" locale="en-US" [min]="0"
+                        styleClass="cc-input-number" [style]="{ width: '100%' }" />
+                </div>
+                <div class="cc-field">
+                    <label class="cc-label">Discounted Price <span class="optional">(optional)</span></label>
+                    <p-inputNumber formControlName="discountPrice" mode="currency" currency="USD" locale="en-US"
+                        [min]="0" placeholder="No discount" styleClass="cc-input-number" [style]="{ width: '100%' }" />
+                </div>
+            </div>
+
+            <div class="cc-field">
+                <label class="cc-label">Visibility on Publish</label>
+                <div class="visibility-options">
+                    <label class="visibility-pill" [class.selected]="form.get('pricing.visibility')?.value === 'Draft'">
+                        <input type="radio" formControlName="visibility" value="Draft" hidden />
+                        <i class="pi pi-eye-slash"></i> Save as Draft
+                    </label>
+                    <label class="visibility-pill"
+                        [class.selected]="form.get('pricing.visibility')?.value === 'Published'">
+                        <input type="radio" formControlName="visibility" value="Published" hidden />
+                        <i class="pi pi-globe"></i> Publish Immediately
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STEP 5: Review -->
+        <div class="cc-panel review-panel" *ngIf="activeStep() === 'review'">
+
+            <div class="review-header">
+                <div class="review-thumb" *ngIf="thumbnailPreview()">
+                    <img [src]="thumbnailPreview()" alt="" />
+                </div>
+                <div class="review-thumb placeholder" *ngIf="!thumbnailPreview()">
+                    <i class="pi pi-image"></i>
+                </div>
+                <div class="review-header-text">
+                    <h3>{{ form.get('basics.title')?.value || 'Untitled Course' }}</h3>
+                    <p>{{ form.get('basics.shortDescription')?.value || 'No description provided.' }}</p>
+                    <div class="review-badges">
+                        <span class="mini-badge" *ngIf="form.get('basics.category')?.value">{{
+                            form.get('basics.category')?.value }}</span>
+                        <span class="mini-badge" *ngIf="form.get('basics.level')?.value">{{
+                            form.get('basics.level')?.value }}</span>
+                        <span class="mini-badge" *ngIf="form.get('basics.language')?.value">{{
+                            form.get('basics.language')?.value }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-stats-grid">
+                <div class="review-stat">
+                    <span class="rs-label">Sections</span>
+                    <span class="rs-value">{{ sectionsArray.length }}</span>
+                </div>
+                <div class="review-stat">
+                    <span class="rs-label">Lessons</span>
+                    <span class="rs-value">{{ totalLessons() }}</span>
+                </div>
+                <div class="review-stat">
+                    <span class="rs-label">Videos Uploaded</span>
+                    <span class="rs-value" [class.rs-warning]="videosUploadedCount() < totalLessons()">
+                        {{ videosUploadedCount() }}/{{ totalLessons() }}
+                    </span>
+                </div>
+                <div class="review-stat">
+                    <span class="rs-label">Price</span>
+                    <span class="rs-value">
+                        {{ form.get('pricing.tier')?.value === 'Free' ? 'Free' : ('$' + effectivePrice()) }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="review-warning" *ngIf="videosUploadedCount() < totalLessons()">
+                <i class="pi pi-video"></i>
+                {{ totalLessons() - videosUploadedCount() }} lesson(s) are missing video uploads. Students won't be able
+                to watch those lessons.
+            </div>
+
+            <div class="review-warning" *ngIf="!form.valid">
+                <i class="pi pi-exclamation-triangle"></i>
+                Some required fields are incomplete. Please review previous steps before publishing.
+            </div>
+
+            <div class="review-warning success" *ngIf="form.valid && videosUploadedCount() === totalLessons()">
+                <i class="pi pi-check-circle"></i>
+                Everything looks good! You're ready to publish this course.
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <ng-template pTemplate="footer">
+        <div class="cc-footer-wrap">
+            <div class="publish-blocked-banner" *ngIf="publishBlockedReason()">
+                <i class="pi pi-exclamation-triangle"></i> {{ publishBlockedReason() }}
+            </div>
+            <div class="cc-footer">
+                <button class="footer-btn secondary" (click)="close()">Cancel</button>
+
+                <div class="footer-right">
+                    <button class="footer-btn secondary" *ngIf="activeStepIndex() > 0" (click)="prevStep()">
+                        <i class="pi pi-arrow-left"></i> Back
+                    </button>
+                    <button class="footer-btn outline" (click)="saveDraft()">
+                        Save as Draft
+                    </button>
+                    <button class="footer-btn primary" *ngIf="activeStepIndex() < steps.length - 1"
+                        (click)="nextStep()">
+                        Next <i class="pi pi-arrow-right"></i>
+                    </button>
+                    <button class="footer-btn primary" *ngIf="activeStepIndex() === steps.length - 1"
+                        (click)="publish()">
+                        <i class="pi pi-check"></i> Publish Course
+                    </button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+</p-dialog>

@@ -1,0 +1,196 @@
+<div class="mc-wrapper">
+  <!-- Loading State -->
+  <div *ngIf="loading()" class="loading-overlay">
+    <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    <span>Loading courses...</span>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="loadError()" class="error-message">
+    <i class="pi pi-exclamation-circle"></i>
+    <span>{{ loadError() }}</span>
+    <button (click)="loadCourses()">Retry</button>
+  </div>
+
+  <!-- Page Header -->
+  <div class="mc-header">
+    <div class="mc-header-left">
+      <h1 class="mc-title">My Courses</h1>
+      <p class="mc-subtitle">Manage and monitor all your courses in one place.</p>
+    </div>
+    <button class="create-btn" (click)="openCreateDialog()">
+      <i class="pi pi-plus"></i>
+      Create New Course
+    </button>
+  </div>
+
+  <!-- Stat Cards -->
+  <div class="mc-stat-grid">
+    <div class="mc-stat-card" *ngFor="let card of statCards">
+      <div class="mc-stat-icon" [style.background]="card.iconBg">
+        <i [class]="card.icon" [style.color]="card.iconColor"></i>
+      </div>
+      <div class="mc-stat-info">
+        <span class="mc-stat-label">{{ card.label }}</span>
+        <span class="mc-stat-value">
+          <ng-container [ngSwitch]="card.label">
+            <ng-container *ngSwitchCase="'Total Courses'">{{ stats().all }}</ng-container>
+            <ng-container *ngSwitchCase="'Published Courses'">{{ stats().published }}</ng-container>
+            <ng-container *ngSwitchCase="'Draft Courses'">{{ stats().draft }}</ng-container>
+            <ng-container *ngSwitchCase="'Archived Courses'">{{ stats().archived }}</ng-container>
+            <ng-container *ngSwitchDefault>0</ng-container>
+          </ng-container>
+        </span>
+        <span class="mc-stat-sub">{{ card.sub }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="mc-table-card">
+    <!-- Tabs + Toolbar -->
+    <div class="mc-toolbar">
+      <div class="mc-tabs">
+        <button
+          class="mc-tab"
+          [class.active]="activeTab() === 'all'"
+          (click)="setTab('all')"
+        >All ({{ tabCounts().all }})</button>
+        <button
+          class="mc-tab"
+          [class.active]="activeTab() === 'published'"
+          (click)="setTab('published')"
+        >Published ({{ tabCounts().published }})</button>
+        <button
+          class="mc-tab"
+          [class.active]="activeTab() === 'draft'"
+          (click)="setTab('draft')"
+        >Draft ({{ tabCounts().draft }})</button>
+        <button
+          class="mc-tab"
+          [class.active]="activeTab() === 'archived'"
+          (click)="setTab('archived')"
+        >Archived ({{ tabCounts().archived }})</button>
+      </div>
+
+      <div class="mc-toolbar-right">
+        <div class="mc-search-wrap">
+          <i class="pi pi-search mc-search-icon"></i>
+          <input
+            class="mc-search-input"
+            type="text"
+            placeholder="Search my courses..."
+            [value]="searchQuery()"
+            (input)="onSearch($any($event.target).value)"
+          />
+        </div>
+        <button class="mc-sort-btn">
+          Sort by: {{ sortBy() }} <i class="pi pi-chevron-down"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <table class="mc-table">
+      <thead>
+        <tr>
+          <th class="col-course">Course</th>
+          <th class="col-students">Students</th>
+          <th class="col-lessons">Lessons</th>
+          <th class="col-duration">Duration</th>
+          <th class="col-status">Status</th>
+          <th class="col-actions">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let course of pagedCourses()">
+          <!-- Course -->
+          <td class="col-course">
+            <div class="course-cell">
+              <div class="course-thumb" [style.background]="course.abbrBg">
+                <span [style.color]="course.abbrColor">{{ course.abbr }}</span>
+              </div>
+              <div class="course-meta">
+                <span class="course-name">{{ course.name }}</span>
+                <span class="course-desc">{{ course.description }}</span>
+              </div>
+            </div>
+          </td>
+
+          <!-- Students -->
+          <td class="col-students">
+            <span class="meta-with-icon"><i class="pi pi-users"></i> {{ course.students }}</span>
+          </td>
+
+          <!-- Lessons -->
+          <td class="col-lessons">
+            <span class="meta-with-icon"><i class="pi pi-book"></i> {{ course.lessons }}</span>
+          </td>
+
+          <!-- Duration -->
+          <td class="col-duration">
+            <span class="meta-with-icon"><i class="pi pi-clock"></i> {{ course.duration }}</span>
+          </td>
+
+          <!-- Status -->
+          <td class="col-status">
+            <span class="status-badge" [class]="'status-' + course.status.toLowerCase()">
+              {{ course.status }}
+            </span>
+          </td>
+
+          <!-- Actions -->
+          <td class="col-actions">
+            <div class="actions-wrap">
+              <button class="action-btn" pTooltip="View" tooltipPosition="top">
+                <i class="pi pi-eye"></i>
+              </button>
+              <button class="action-btn" pTooltip="Edit" tooltipPosition="top">
+                <i class="pi pi-pencil"></i>
+              </button>
+              <button class="action-btn" pTooltip="More" tooltipPosition="top">
+                <i class="pi pi-ellipsis-v"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Empty State -->
+        <tr *ngIf="pagedCourses().length === 0">
+          <td colspan="6" class="empty-row">
+            <i class="pi pi-inbox"></i>
+            <span>No courses found</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div class="mc-footer">
+      <div class="show-per-page">
+        <span>Show</span>
+        <select class="page-size-select" [value]="pageSize()" (change)="onPageSizeChange(+$any($event.target).value)">
+          <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+        </select>
+        <span>per page</span>
+      </div>
+
+      <div class="pagination">
+        <button class="page-nav" [disabled]="currentPage() === 1" (click)="prevPage()">
+          <i class="pi pi-angle-left"></i>
+        </button>
+        <button
+          class="page-btn"
+          *ngFor="let p of pageNumbers()"
+          [class.active]="p === currentPage()"
+          (click)="goToPage(p)"
+        >{{ p }}</button>
+        <button class="page-nav" [disabled]="currentPage() === totalPages()" (click)="nextPage()">
+          <i class="pi pi-angle-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-add-courses [(visible)]="showAddCourse" (courseCreated)="onCourseCreated($event)"></app-add-courses>
